@@ -49,7 +49,7 @@ Todos os serviços rodam em contêineres Docker (`docker-compose.yml`), com **li
 | PostgreSQL | 2 | 1 GiB |
 | Redis | 1 | 256 MiB |
 | nginx | 1 | 256 MiB |
-| k6 (gerador de carga) | 2 | 512 MiB |
+| k6 (gerador de carga) | 2 | 1 GiB |
 
 - **Por que o k6 roda em contêiner:** ele fica na mesma rede interna do Docker que os serviços. No macOS, o encaminhamento de portas do Docker Desktop vira gargalo em taxas altas e distorceria as medidas.
 - **Máquina, versões e imagem:** registradas em `run.json` em toda rodada. Resultados de máquinas diferentes não devem ser misturados.
@@ -68,6 +68,7 @@ Gerada com **k6 2.2.0** (`k6/carga.js`) no modelo de **taxa de chegada constante
 - **Escritas:** 80% `PATCH` de preço ou estoque, 15% `POST` e 5% `DELETE`, este apenas de produtos criados pela própria carga, para não afetar as leituras.
 - **Popularidade:** produtos e categorias seguem uma **distribuição Zipf com expoente s = 1**. Poucos itens concentram a maior parte dos acessos, como em catálogos reais. Os itens mais populares são espalhados pelo catálogo por uma permutação fixa (semente 42).
 - **Mesmo modelo nas escritas:** as escritas seguem a mesma popularidade, então os itens mais lidos também são os mais alterados. Isso é o que torna a invalidação relevante.
+- **Usuários virtuais (VUs) do k6:** são pré-alocados VUs equivalentes a 1 s de chegadas (a taxa em req/s, entre 50 e 1.000). Uma pausa curta do sistema vira fila (latência), em vez de obrigar o k6 a criar VUs no meio do teste, o que consome CPU do gerador e produz descartes artificiais. As tabelas da distribuição Zipf são calculadas uma vez e compartilhadas entre os VUs (`SharedArray`), então 1.000 VUs inicializam em menos de 1 s e ocupam ~0,3 MiB cada.
 - **Cliente com ETag:** o cliente guarda o último `ETag` de cada URL e o reenvia em `If-None-Match`. Só tem efeito na estratégia `http`, a única em que a API envia ETag. O cliente **não** reaproveita respostas localmente sem consultar o servidor, o que é uma escolha conservadora: mede o efeito do servidor e do intermediário, não o do cache do navegador.
 
 ## 3. Protocolo de uma medição
@@ -78,7 +79,7 @@ Idêntico para todas as estratégias (`src/experimento/runner.ts`):
 2. Recria os contêineres da API (com a estratégia) e do nginx e esvazia o Redis. O processo da API é novo e **todos os caches começam vazios**.
 3. **Aquecimento:** k6 com a mesma carga e taxa da medição. O resultado é descartado. Serve para aquecer o JIT do Node.js, o pool de conexões e os caches.
 4. Zera as métricas internas da API e as estatísticas do PostgreSQL. O cache continua aquecido.
-5. **Medição:** k6 com a carga e a taxa definidas. Em paralelo, o `docker stats` amostra CPU e memória de cada contêiner (≈1 amostra/s), incluindo o próprio k6.
+5. **Medição:** k6 com a carga e a taxa definidas. Em paralelo, o `docker stats` amostra CPU e memória de cada contêiner (≈2 amostras/s), incluindo o próprio k6. Só entram no resumo as amostras da janela do cenário: o k6 registra o instante em que o cenário começa (após inicializar os VUs), e a primeira amostra seguinte é descartada.
 6. **Coleta:** resumo do k6, métricas internas da API e `pg_stat_statements`. Tudo é gravado em `medicoes.jsonl`.
 
 ## 4. Experimentos
@@ -88,6 +89,8 @@ Idêntico para todas as estratégias (`src/experimento/runner.ts`):
 Linha de base (`none`) nas três cargas, em degraus crescentes de taxa (15 s de aquecimento + 20 s de medição), até a primeira taxa **não sustentável**.
 
 > **Taxa sustentável:** p95 < 100 ms, menos de 1% das requisições descartadas e menos de 1% de erros.
+
+> **Confirmação de degrau reprovado (E0 e E2):** um degrau reprovado é medido uma segunda vez e só encerra a escada se reprovar de novo. Motivo: no ensaio, uma única pausa de ~1 s da máquina reprovou um degrau muito abaixo da capacidade real (latência máxima de 1 s com a API em 43% de CPU). Na repetição, o mesmo degrau passou com folga (p99 de 7 ms). As duas medições ficam registradas (coluna `tentativa`).
 
 A taxa do experimento de latência é ≈60% da menor capacidade sustentável da linha de base, arredondada para baixo em múltiplos de 50. Assim, a linha de base opera longe da saturação, e as diferenças medidas refletem o custo de cada estratégia, não o colapso por fila.
 
@@ -100,7 +103,7 @@ A taxa do experimento de latência é ≈60% da menor capacidade sustentável da
 ### E2 — Capacidade (throughput máximo sustentável)
 
 - **Desenho:** para cada estratégia × carga, a taxa sobe em degraus (400, 600, 800, 1.000, 1.200, 1.600 e 2.000 req/s), com 15 s de aquecimento e 30 s de medição cada, até a primeira taxa não sustentável.
-- **Resultado:** capacidade = maior degrau sustentável, com **3 repetições** em ordem sorteada.
+- **Resultado:** capacidade = maior degrau sustentável (com a mesma regra de confirmação do E0), com **3 repetições** em ordem sorteada.
 - **Resolução:** limitada à distância entre degraus. Se a estratégia sustenta o maior degrau, a capacidade real é "≥ 2.000 req/s".
 
 ### E3 — Consistência após escrita
@@ -141,6 +144,8 @@ Este experimento mede o compromisso da estratégia HTTP: o intermediário não �
 
 ## 7. Ameaças à validade
 
+- **Perturbações transitórias da máquina:** pausas curtas (sistema operacional, virtualização do Docker) afetam medições isoladas.
+  - Mitigação: confirmação dos degraus reprovados (E0, E2); no E1, 5 repetições em ordem sorteada, gráficos pela mediana e testes não paramétricos, que são robustos a uma repetição atípica. Nenhuma medição é descartada ou refeita manualmente.
 - **Mesma máquina para carga e sistema:** o k6 e os serviços dividem o hardware.
   - Mitigação: limites de CPU por contêiner e uso de CPU do k6 registrado em cada medição. Pico abaixo de 200% (o limite do contêiner) indica que o gerador não saturou.
 - **Hardware de referência sem ventoinha (MacBook Air M1, 8 GB):** sob carga prolongada, a CPU pode reduzir a frequência.

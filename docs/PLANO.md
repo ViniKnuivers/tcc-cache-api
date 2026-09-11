@@ -16,6 +16,7 @@ Objetivo: entregar a parte prática **completa e fechada**, com experimentos exe
 | 8 | Amostragem de CPU do próprio k6 (prova de que o gerador não é o gargalo) | ⏳ |
 | 9 | Análise: tabelas, gráficos e testes estatísticos | ⏳ |
 | 10 | Documentação: README, metodologia e resultados | ⏳ |
+| 11 | Robustez do protocolo: confirmação de degraus reprovados, janela de amostragem alinhada ao cenário, tabelas Zipf compartilhadas entre VUs | ⏳ |
 
 ## 2. Experimentos
 
@@ -24,9 +25,9 @@ Objetivo: entregar a parte prática **completa e fechada**, com experimentos exe
 | E0 | Calibração | Qual taxa usar? | `none`, 3 cargas, degraus de 200 a 1.200 req/s | ~30 min |
 | E1 | Latência | Qual o impacto de cada estratégia na latência, nos recursos, nos acertos e nos acessos ao banco? | 4 estratégias × 3 cargas × 5 repetições, taxa fixa (≈60% da capacidade da linha de base), 30 s de aquecimento + 60 s de medição | ~1h45 |
 | E2 | Capacidade | Qual o maior throughput sustentável de cada estratégia? | 4 × 3 × 3 repetições, degraus de 400 a 2.000 req/s até a primeira taxa não sustentável | ~2h30 |
-| E3 | Consistência | Quanto cada estratégia entrega dado desatualizado após uma escrita? | 4 estratégias × 100 ciclos (leitura → escrita → leitura imediata) + tempo até o dado novo aparecer | ~10 min |
+| E3 | Consistência | Quanto cada estratégia entrega dado desatualizado após uma escrita? | 4 estratégias × 100 produtos (leitura → escrita → leitura imediata) + tempo até o dado novo aparecer | ~5 min |
 
-**Critério de taxa sustentável:** p95 < 100 ms, menos de 1% de requisições descartadas e menos de 1% de erros.
+**Critério de taxa sustentável:** p95 < 100 ms, menos de 1% de requisições descartadas e menos de 1% de erros. Um degrau reprovado é medido de novo e só encerra a escada se reprovar outra vez.
 
 ## 3. Métricas (do pré-projeto) e onde estão
 
@@ -44,7 +45,7 @@ Objetivo: entregar a parte prática **completa e fechada**, com experimentos exe
 - **Descrição:** média ± desvio padrão (e mediana) de cada métrica por estratégia × carga, sobre as 5 repetições.
 - **Comparação entre as 4 estratégias:** teste de Kruskal-Wallis por carga, adequado para amostras pequenas sem supor normalidade.
 - **Comparações par a par:** teste de Mann-Whitney exato com ajuste de Holm, contra a linha de base e entre todas as estratégias.
-- **Tamanho do efeito:** razão entre as medianas (ex.: "p95 2,3× menor que sem cache").
+- **Tamanho do efeito:** razão entre as medianas (ex.: "p95 2,3× menor que sem cache") e delta de Cliff.
 - **Diagnóstico de deriva:** latência da linha de base ao longo da ordem de execução, para verificar se o aquecimento térmico da máquina afetou os resultados.
 
 ## 5. Ameaças à validade (documentadas em `docs/METODOLOGIA.md`)

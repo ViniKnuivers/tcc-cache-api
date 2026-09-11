@@ -112,10 +112,40 @@ function parseMemMiB(usage: string): number {
   return v * (factor[unit] ?? NaN);
 }
 
+export interface Amostra {
+  t: number;
+  cpu: number;
+  mem: number;
+}
+
+/**
+ * Resume as amostras de um contêiner. Com `janela`, usa só as amostras dentro
+ * dela; como o docker stats mede o intervalo anterior a cada amostra (~1 s), a
+ * primeira amostra após o início é descartada (inclui a inicialização do k6).
+ * Sem janela (ou com poucas amostras nela), descarta só a primeira amostra,
+ * que costuma vir zerada.
+ */
+export function resumirAmostras(list: readonly Amostra[], janela?: { inicioMs: number; fimMs: number }): ResourceUsage | null {
+  let valid = list.length > 1 ? list.slice(1) : [...list];
+  if (janela) {
+    const dentro = list.filter((s) => s.t >= janela.inicioMs + 1000 && s.t <= janela.fimMs);
+    if (dentro.length >= 3) valid = dentro;
+  }
+  if (valid.length === 0) return null;
+  const mean = (f: (s: Amostra) => number) => valid.reduce((a, s) => a + f(s), 0) / valid.length;
+  return {
+    cpuMedia: round(mean((s) => s.cpu)),
+    cpuMax: round(Math.max(...valid.map((s) => s.cpu))),
+    memMediaMiB: round(mean((s) => s.mem)),
+    memMaxMiB: round(Math.max(...valid.map((s) => s.mem))),
+    amostras: valid.length,
+  };
+}
+
 /** Amostra `docker stats` (~1 amostra/s por contêiner) enquanto a medição roda. */
 export class StatsSampler {
   private proc: ChildProcess | null = null;
-  private readonly samples = new Map<string, Array<{ cpu: number; mem: number }>>();
+  private readonly samples = new Map<string, Amostra[]>();
   private buffer = "";
 
   start(containers: readonly string[]): void {
@@ -125,6 +155,7 @@ export class StatsSampler {
       this.buffer += chunk.toString().replace(/\x1b\[[0-9;]*[A-Za-z]/g, "\n");
       const lines = this.buffer.split("\n");
       this.buffer = lines.pop() ?? "";
+      const t = Date.now();
       for (const line of lines) {
         const [name, cpu, mem] = line.trim().split("|");
         if (!name || !cpu || !mem) continue;
@@ -132,27 +163,23 @@ export class StatsSampler {
         const memValue = parseMemMiB(mem.split("/")[0] ?? "");
         if (!Number.isFinite(cpuValue) || !Number.isFinite(memValue)) continue;
         const list = this.samples.get(name) ?? [];
-        list.push({ cpu: cpuValue, mem: memValue });
+        list.push({ t, cpu: cpuValue, mem: memValue });
         this.samples.set(name, list);
       }
     });
   }
 
-  stop(): Record<string, ResourceUsage> {
+  stop(): void {
     this.proc?.kill("SIGTERM");
     this.proc = null;
+  }
+
+  /** Uso de recursos por contêiner, restrito à janela da medição quando informada. */
+  resumo(janela?: { inicioMs: number; fimMs: number }): Record<string, ResourceUsage> {
     const out: Record<string, ResourceUsage> = {};
     for (const [name, list] of this.samples) {
-      // A primeira amostra do docker stats costuma vir zerada; descartamos.
-      const valid = list.length > 1 ? list.slice(1) : list;
-      const mean = (f: (s: { cpu: number; mem: number }) => number) => valid.reduce((a, s) => a + f(s), 0) / valid.length;
-      out[name] = {
-        cpuMedia: round(mean((s) => s.cpu)),
-        cpuMax: round(Math.max(...valid.map((s) => s.cpu))),
-        memMediaMiB: round(mean((s) => s.mem)),
-        memMaxMiB: round(Math.max(...valid.map((s) => s.mem))),
-        amostras: valid.length,
-      };
+      const r = resumirAmostras(list, janela);
+      if (r) out[name] = r;
     }
     return out;
   }

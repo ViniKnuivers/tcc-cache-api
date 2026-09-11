@@ -19,6 +19,7 @@
 import http from "k6/http";
 import { check } from "k6";
 import { Counter, Rate } from "k6/metrics";
+import { SharedArray } from "k6/data";
 
 const BASE = __ENV.BASE_URL || "http://nginx:8080";
 const WORKLOAD = __ENV.WORKLOAD || "leitura";
@@ -42,7 +43,10 @@ export const options = {
       rate: RATE,
       timeUnit: "1s",
       duration: DURATION,
-      preAllocatedVUs: Math.max(20, Math.ceil(RATE / 4)),
+      // VUs pré-alocados = 1 s de chegadas: uma pausa curta do sistema vira fila
+      // (latência) em vez de obrigar o k6 a criar VUs no meio do teste, o que
+      // consome CPU do gerador e produz descartes artificiais.
+      preAllocatedVUs: Math.min(1000, Math.max(50, RATE)),
       maxVUs: 1000,
     },
   },
@@ -101,19 +105,25 @@ function sampleRank(cdf, u) {
 
 function permutation(n, seed) {
   const rng = mulberry32(seed);
-  const p = Array.from({ length: n }, (_, i) => i + 1);
+  const p = new Int32Array(n);
+  for (let i = 0; i < n; i++) p[i] = i + 1;
   for (let i = n - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
-    [p[i], p[j]] = [p[j], p[i]];
+    const t = p[i];
+    p[i] = p[j];
+    p[j] = t;
   }
   return p;
 }
 
-const CDF_PRODUTOS = zipfCdf(N_PRODUTOS, ZIPF_S);
-const CDF_CATEGORIAS = zipfCdf(N_CATEGORIAS, ZIPF_S);
+// As tabelas são calculadas uma única vez e compartilhadas entre os VUs
+// (SharedArray). Calculá-las em cada VU custava ~14 ms de CPU e ~1 MiB por VU,
+// o que atrasava a inicialização e obrigava a pré-alocar poucos VUs.
+const CDF_PRODUTOS = new SharedArray("cdf_produtos", () => Array.from(zipfCdf(N_PRODUTOS, ZIPF_S)));
+const CDF_CATEGORIAS = new SharedArray("cdf_categorias", () => Array.from(zipfCdf(N_CATEGORIAS, ZIPF_S)));
 // Os itens mais populares ficam espalhados pelo catálogo (não são os IDs 1, 2, 3…).
-const PRODUTO_POR_RANK = permutation(N_PRODUTOS, SEED);
-const CATEGORIA_POR_RANK = permutation(N_CATEGORIAS, SEED + 1);
+const PRODUTO_POR_RANK = new SharedArray("perm_produtos", () => Array.from(permutation(N_PRODUTOS, SEED)));
+const CATEGORIA_POR_RANK = new SharedArray("perm_categorias", () => Array.from(permutation(N_CATEGORIAS, SEED + 1)));
 
 // --- Estado por VU --------------------------------------------------------------
 let rng = null;
@@ -192,6 +202,12 @@ function escrita() {
     tags: { tipo: "escrita", endpoint: "patch", name: "patch" },
   });
   registrar(res, [200]);
+}
+
+// Roda depois de inicializar os VUs e imediatamente antes do cenário: o instante
+// vai para o resumo (setup_data) e delimita a janela de amostragem de CPU/memória.
+export function setup() {
+  return { inicio: Date.now() };
 }
 
 export default function () {

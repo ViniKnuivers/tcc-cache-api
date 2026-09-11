@@ -84,15 +84,19 @@ function numero(raw: string | undefined, fallback: number): number {
 }
 
 /** Taxa do experimento de latência: ≈60% da menor capacidade da linha de base (múltiplo de 50). */
-function taxaSugerida(medicoes: readonly Medicao[]): { taxa: number | null; capacidadeMinima: number; maiorDegrau: number; censurada: boolean } {
+function taxaSugerida(
+  medicoes: readonly Medicao[],
+  taxas: readonly number[],
+): { taxa: number | null; capacidadeMinima: number; maiorDegrau: number; censurada: boolean } {
   const base = capacidades(medicoes.filter((m) => m.estrategia === "none")).map((c) => c.capacidade);
-  const maiorDegrau = Math.max(...medicoes.map((m) => m.taxa));
+  const maiorDegrau = Math.max(...taxas);
   const capacidadeMinima = Math.min(...base);
   const taxa = Number.isFinite(capacidadeMinima) && capacidadeMinima > 0 ? Math.max(50, Math.floor((0.6 * capacidadeMinima) / 50) * 50) : null;
   return { taxa, capacidadeMinima, maiorDegrau, censurada: base.some((c) => c >= maiorDegrau) };
 }
 
-function imprimirResumo(tipo: Tipo, medicoes: Medicao[]): void {
+function imprimirResumo(cfg: Config, medicoes: Medicao[]): void {
+  const tipo = cfg.tipo;
   if (medicoes.length === 0) return;
   if (tipo === "latencia") return; // o resumo completo fica em resumo.json/medicoes.csv
   const caps = capacidades(medicoes);
@@ -101,7 +105,7 @@ function imprimirResumo(tipo: Tipo, medicoes: Medicao[]): void {
     console.log(`  ${c.estrategia.padEnd(6)} ${c.carga.padEnd(7)} rep ${c.repeticao}: ${c.capacidade || "< menor degrau"}`);
   }
   if (tipo === "calibracao") {
-    const t = taxaSugerida(medicoes);
+    const t = taxaSugerida(medicoes, cfg.taxas);
     if (t.censurada) {
       console.warn(`⚠ A linha de base sustentou o maior degrau (${t.maiorDegrau} req/s): a capacidade é maior. Rode com degraus mais altos (--taxas).`);
     }
@@ -142,7 +146,7 @@ async function main(): Promise<void> {
     if (!runId) throw new Error("Informe --run-id");
     const r = await Rodada.abrir(DEFAULTS.latencia as Config, runId);
     escreverRelatorio(r.dir, r.medicoes());
-    imprimirResumo(r.cfg.tipo, r.medicoes());
+    imprimirResumo(r.cfg, r.medicoes());
     console.log(`Relatório atualizado em ${path.relative(process.cwd(), r.dir)}/`);
     return;
   }
@@ -194,7 +198,7 @@ async function main(): Promise<void> {
   } finally {
     desinstalar();
     escreverRelatorio(r.dir, r.medicoes());
-    imprimirResumo(r.cfg.tipo, r.medicoes());
+    imprimirResumo(r.cfg, r.medicoes());
     await r.fechar();
   }
   const faltam = r.interrompida ? ` Para retomar: pnpm experimento ${sub} --run-id ${r.meta.runId}` : "";
@@ -212,7 +216,7 @@ async function executar(cfg: Config): Promise<Rodada> {
   } finally {
     desinstalar();
     escreverRelatorio(r.dir, r.medicoes());
-    imprimirResumo(cfg.tipo, r.medicoes());
+    imprimirResumo(cfg, r.medicoes());
     await r.fechar();
   }
   if (r.interrompida) throw new Error(`Interrompido. Retome com: pnpm experimento ${cfg.tipo === "calibracao" ? "calibrar" : cfg.tipo} --run-id ${r.meta.runId}`);
@@ -226,8 +230,10 @@ async function executar(cfg: Config): Promise<Rodada> {
 async function tudo(seed: number): Promise<void> {
   const t0 = Date.now();
   const cal = await executar({ tipo: "calibracao", ...DEFAULTS.calibracao, seed });
-  const sugestao = taxaSugerida(cal.medicoes());
-  if (!sugestao.taxa) throw new Error("A calibração não encontrou nenhuma taxa sustentável para a linha de base.");
+  const sugestao = taxaSugerida(cal.medicoes(), cal.cfg.taxas);
+  if (!sugestao.taxa) {
+    throw new Error(`A linha de base não sustentou o menor degrau da calibração (${Math.min(...cal.cfg.taxas)} req/s) em alguma carga. Rode com degraus menores (--taxas).`);
+  }
   if (sugestao.censurada) console.warn("⚠ Capacidade da linha de base acima do maior degrau da calibração; usando a sugestão mesmo assim.");
   const lat = await executar({ tipo: "latencia", ...DEFAULTS.latencia, taxas: [sugestao.taxa], seed });
   const cap = await executar({ tipo: "capacidade", ...DEFAULTS.capacidade, seed });

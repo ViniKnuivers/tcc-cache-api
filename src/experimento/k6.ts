@@ -42,6 +42,8 @@ export interface K6Resultado {
   nginxHits: number;
   nginxMisses: number;
   respostas304: number;
+  /** Instante (ms, relógio do contêiner) em que o cenário começou (após a inicialização dos VUs). */
+  inicioMs: number | null;
 }
 
 export async function runK6(p: K6Params): Promise<void> {
@@ -62,6 +64,7 @@ export async function runK6(p: K6Params): Promise<void> {
 type MetricValues = Record<string, number>;
 interface K6Summary {
   metrics: Record<string, { values: MetricValues } | undefined>;
+  setup_data?: { inicio?: number };
 }
 
 function latencias(v: MetricValues | undefined): Latencias | null {
@@ -93,5 +96,6 @@ export function lerResumoK6(summaryRelPath: string): K6Resultado {
     nginxHits: m("nginx_cache_hit")?.["count"] ?? 0,
     nginxMisses: m("nginx_cache_miss")?.["count"] ?? 0,
     respostas304: m("respostas_304")?.["count"] ?? 0,
+    inicioMs: data.setup_data?.inicio ?? null,
   };
 }

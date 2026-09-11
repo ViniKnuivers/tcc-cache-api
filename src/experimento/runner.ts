@@ -64,6 +64,8 @@ export interface Medicao {
   carga: Workload;
   taxa: number;
   repeticao: number;
+  /** 1 = medição normal; 2 = confirmação de um degrau reprovado (calibração/capacidade). */
+  tentativa: number;
   aquecimentoS: number;
   duracaoS: number;
   ttlS: number;
@@ -80,6 +82,7 @@ interface Etapa {
   carga: Workload;
   taxa: number;
   repeticao: number;
+  tentativa?: number;
 }
 
 // --- Sorteio determinístico da ordem --------------------------------------------
@@ -112,7 +115,7 @@ export function combinacoes(cfg: Config, repeticao: number): Array<{ estrategia:
 }
 
 export const chaveDe = (tipo: Tipo, e: Etapa | Omit<Etapa, "chave">) =>
-  `${tipo}|${e.estrategia}|${e.carga}|t${e.taxa}|r${e.repeticao}`;
+  `${tipo}|${e.estrategia}|${e.carga}|t${e.taxa}|r${e.repeticao}${(e.tentativa ?? 1) > 1 ? `|a${e.tentativa}` : ""}`;
 
 export function sustentavel(k6: K6Resultado, taxa: number, duracaoS: number): boolean {
   const oferecidas = taxa * duracaoS;
@@ -231,7 +234,10 @@ export class Rodada {
     if (pronta) return pronta;
     const cfg = this.cfg;
     const ordem = ++this.ordem;
-    const rotulo = `${etapa.estrategia.padEnd(6)} ${etapa.carga.padEnd(7)} ${String(etapa.taxa).padStart(5)} req/s  rep ${etapa.repeticao}`;
+    const tentativa = etapa.tentativa ?? 1;
+    const rotulo =
+      `${etapa.estrategia.padEnd(6)} ${etapa.carga.padEnd(7)} ${String(etapa.taxa).padStart(5)} req/s  rep ${etapa.repeticao}` +
+      (tentativa > 1 ? " (confirmação)" : "");
     const t0 = Date.now();
     try {
       this.db ??= createDb(config.databaseUrl, 2);
@@ -255,16 +261,19 @@ export class Rodada {
         summaryRelPath: arquivo,
         containerName: K6_CONTAINER,
       });
-      let recursos: Record<string, ResourceUsage>;
       try {
         const k6Up = await aguardarContainer(K6_CONTAINER);
         sampler.start([...Object.values(CONTAINERS), ...(k6Up ? [K6_CONTAINER] : [])]);
         await k6Run;
       } finally {
-        recursos = sampler.stop();
+        sampler.stop();
       }
       const [app, banco] = await Promise.all([lerMetricasApi(), lerPgStats()]);
       const k6 = lerResumoK6(arquivo);
+      // CPU/memória só da janela do cenário (exclui a inicialização dos VUs do k6).
+      const recursos: Record<string, ResourceUsage> = sampler.resumo(
+        k6.inicioMs ? { inicioMs: k6.inicioMs, fimMs: k6.inicioMs + cfg.duracaoS * 1000 } : undefined,
+      );
 
       const m: Medicao = {
         runId: this.meta.runId,
@@ -277,6 +286,7 @@ export class Rodada {
         carga: etapa.carga,
         taxa: etapa.taxa,
         repeticao: etapa.repeticao,
+        tentativa,
         aquecimentoS: cfg.aquecimentoS,
         duracaoS: cfg.duracaoS,
         ttlS: cfg.ttlS,
@@ -329,6 +339,10 @@ export async function experimentoLatencia(r: Rodada): Promise<void> {
 /**
  * Capacidade (e calibração): para cada combinação, sobe a taxa em degraus até
  * a primeira taxa não sustentável. Capacidade = maior taxa sustentável.
+ *
+ * Um degrau reprovado é medido uma segunda vez (confirmação) e só encerra a
+ * escada se reprovar de novo: uma perturbação transitória isolada (ex.: uma
+ * pausa de ~1 s na máquina) não define sozinha a capacidade.
  */
 export async function experimentoDegraus(r: Rodada): Promise<void> {
   const cfg = r.cfg;
@@ -343,7 +357,11 @@ export async function experimentoDegraus(r: Rodada): Promise<void> {
       for (const taxa of taxas) {
         if (r.interrompida) return;
         const etapa = { ...c, taxa, repeticao: rep };
-        const m = await r.medir({ ...etapa, chave: chaveDe(cfg.tipo, etapa) });
+        let m = await r.medir({ ...etapa, chave: chaveDe(cfg.tipo, etapa) });
+        if (m && !m.sustentavel && !r.interrompida) {
+          const confirmacao = { ...etapa, tentativa: 2 };
+          m = await r.medir({ ...confirmacao, chave: chaveDe(cfg.tipo, confirmacao) });
+        }
         if (!m || !m.sustentavel) break;
       }
     }

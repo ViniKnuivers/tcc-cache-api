@@ -19,6 +19,7 @@ const COLUNAS: Array<[string, (m: Medicao) => unknown]> = [
   ["carga", (m) => m.carga],
   ["taxa", (m) => m.taxa],
   ["repeticao", (m) => m.repeticao],
+  ["tentativa", (m) => m.tentativa ?? 1],
   ["ordem", (m) => m.ordem],
   ["timestamp", (m) => m.timestamp],
   ["throughput", (m) => m.k6.throughput],

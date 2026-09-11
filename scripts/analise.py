@@ -473,7 +473,7 @@ def main():
                 csv_c.append({"carga": c, "estrategia": s, "capacidade_media": r["media"], "capacidade_dp": r["dp"], "valores": ";".join(str(int(x)) for x in v), "ganho_vs_none": (r["media"] / base) if base else ""})
         escrever_csv(os.path.join(tabelas, "capacidade.csv"), csv_c, list(csv_c[0].keys()))
         md.append(tabela_md(["Carga", "Estratégia", "Capacidade (req/s)", "Repetições", "Ganho vs. sem cache"], linhas_c) + "\n")
-        md.append(f"Degraus testados: {', '.join(br(t, 0) for t in sorted(meta_cap['config']['taxas']))} req/s. A capacidade é o maior degrau sustentável, então a resolução é a distância entre degraus. Com {reps_txt(meta_cap['config']['repeticoes'])}, os valores são descritivos (sem teste de significância).\n")
+        md.append(f"Degraus testados: {', '.join(br(t, 0) for t in sorted(meta_cap['config']['taxas']))} req/s. A capacidade é o maior degrau sustentável, então a resolução é a distância entre degraus. Um degrau reprovado é medido de novo (confirmação) e só encerra a escada se reprovar outra vez. Com {reps_txt(meta_cap['config']['repeticoes'])}, os valores são descritivos (sem teste de significância).\n")
 
     # --- E3: consistência -------------------------------------------------------
     if dirs["consistencia"]:
@@ -490,8 +490,10 @@ def main():
     if dirs["calibracao"]:
         cal = ler_medicoes(dirs["calibracao"])
         md.append("## E0 — Calibração da taxa\n")
-        md.append(tabela_md(["Carga", "Taxa (req/s)", "p95 (ms)", "Descartadas", "Sustentável"],
-                            [[ROTULO_C[r["carga"]], br(r["taxa"], 0), br(r["lat_p95"], 1), br(r["descartadas"], 0), "sim" if r["sustentavel"] == 1 else "não"] for r in sorted(cal, key=lambda r: (CARGAS.index(r["carga"]), r["taxa"]))]) + "\n")
+        md.append(tabela_md(["Carga", "Taxa (req/s)", "Medição", "p95 (ms)", "Descartadas", "Sustentável"],
+                            [[ROTULO_C[r["carga"]], br(r["taxa"], 0), "confirmação" if r.get("tentativa", 1) == 2 else "1ª", br(r["lat_p95"], 1), br(r["descartadas"], 0), "sim" if r["sustentavel"] == 1 else "não"]
+                             for r in sorted(cal, key=lambda r: (CARGAS.index(r["carga"]), r["taxa"], r.get("tentativa", 1)))]) + "\n")
+        md.append("Um degrau reprovado é medido uma segunda vez (confirmação); a escada só termina se ele reprovar de novo.\n")
         md.append(f"Taxa escolhida para o experimento de latência: {br(taxa, 0)} req/s (≈60% da menor capacidade sustentável da linha de base).\n")
 
     md.append("## Diagnóstico de deriva\n")

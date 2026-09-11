@@ -18,7 +18,10 @@
     "prisma:generate": "prisma generate",
     "postinstall": "prisma generate",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "api:up": "docker compose up -d --wait --build api"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.10.0",

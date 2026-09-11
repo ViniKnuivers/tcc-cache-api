@@ -35,7 +35,17 @@ pnpm db:up          # Postgres (porta 5434) e Redis (porta 6380)
 pnpm db:setup       # migrações + dados sintéticos (50 categorias, 10.000 produtos)
 ```
 
-O seed é determinístico e imprime um *fingerprint* (`e5e0188f51430d3d`), que deve ser igual em qualquer máquina.
+Rodar a API:
+
+```bash
+pnpm dev            # local, recarrega ao salvar (porta 3000)
+pnpm api:up         # em contêiner, com 1 CPU e 512 MB (como nos experimentos)
+pnpm test           # testes de integração (banco separado: catalogo_test)
+```
+
+Rotas: `GET /produtos?categoria=&pagina=&limite=`, `GET /produtos/:id`, `POST /produtos`, `PUT /produtos/:id`, `DELETE /produtos/:id`.
+
+O seed é determinístico e imprime um *fingerprint* (`239da9743c2035fc`), que deve ser igual em qualquer máquina.
 
 ## Licença
 

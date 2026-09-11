@@ -1,6 +1,6 @@
 # Serviços do experimento. Versões fixadas para reprodutibilidade.
 # Portas no host escolhidas para não colidir com outros serviços locais:
-#   Postgres 5434 · Redis 6380 (· API 3000 e nginx 8080 nas próximas fases)
+#   Postgres 5434 · Redis 6380 · API 3000 (· nginx 8080 na Fase 3)
 name: tcc-cache
 
 services:
@@ -57,6 +57,36 @@ services:
     mem_limit: 256m
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  api:
+    build: .
+    image: tcc-cache-api:local
+    container_name: tcc-cache-api
+    environment:
+      DATABASE_URL: postgresql://catalogo:catalogo@postgres:5432/catalogo
+      REDIS_URL: redis://redis:6379
+      # Definidos pelo runner do experimento a cada configuração.
+      CACHE_STRATEGY: ${CACHE_STRATEGY:-none}
+      CACHE_TTL_SECONDS: ${CACHE_TTL_SECONDS:-60}
+      MEMORY_CACHE_MAX_ENTRIES: ${MEMORY_CACHE_MAX_ENTRIES:-10000}
+      PORT: "3000"
+      LOG_LEVEL: warn
+    ports:
+      - "3000:3000"
+    # Recursos fixos da API: a comparação entre estratégias precisa que a
+    # aplicação tenha sempre a mesma capacidade de CPU e memória.
+    cpus: 1
+    mem_limit: 512m
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/health || exit 1"]
       interval: 2s
       timeout: 3s
       retries: 30

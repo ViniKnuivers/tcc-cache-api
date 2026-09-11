@@ -9,7 +9,7 @@ import { Faker, base, en, pt_BR } from "@faker-js/faker";
 import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
 import { config } from "../src/config";
-import { createPrisma, type PrismaClient } from "../src/db";
+import { createDb, type Db } from "../src/db";
 
 export const SEED = 20_263;
 export const N_PRODUTOS = 10_000;
@@ -65,11 +65,14 @@ export function generateSeedData(): SeedData {
   for (let i = 1; i <= N_PRODUTOS; i++) {
     const criado = inicio + faker.number.int({ min: 0, max: REF - inicio });
     const atualizado = criado + faker.number.int({ min: 0, max: REF - criado });
+    const nome = faker.commerce.productName();
     produtos.push({
       id: i,
       sku: `SKU-${String(i).padStart(6, "0")}`,
-      nome: faker.commerce.productName(),
-      descricao: faker.commerce.productDescription(),
+      nome,
+      descricao:
+        `${nome}: produto ${faker.commerce.productAdjective().toLowerCase()} feito de ` +
+        `${faker.commerce.productMaterial().toLowerCase()}, com garantia de ${faker.helpers.arrayElement([3, 6, 12, 24])} meses.`,
       preco: faker.commerce.price({ min: 9.9, max: 9_999.9, dec: 2 }),
       estoque: faker.number.int({ min: 0, max: 500 }),
       ativo: faker.number.float({ min: 0, max: 1 }) < 0.95,
@@ -87,7 +90,7 @@ export function seedFingerprint(data: SeedData): string {
 }
 
 /** Apaga tudo e reinsere o estado inicial (usado antes de cada execução do experimento). */
-export async function resetDatabase(prisma: PrismaClient, data = generateSeedData()): Promise<void> {
+export async function resetDatabase(prisma: Db, data = generateSeedData()): Promise<void> {
   await prisma.$transaction(async (tx) => {
     await tx.$executeRawUnsafe("TRUNCATE produto, categoria RESTART IDENTITY CASCADE");
     await tx.categoria.createMany({ data: data.categorias });
@@ -102,7 +105,7 @@ export async function resetDatabase(prisma: PrismaClient, data = generateSeedDat
 }
 
 async function main(): Promise<void> {
-  const prisma = createPrisma(config.databaseUrl, 2);
+  const prisma = createDb(config.databaseUrl, 2);
   try {
     const t0 = Date.now();
     const data = generateSeedData();

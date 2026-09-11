@@ -4,6 +4,7 @@ import type { Cache } from "./cache/types";
 import type { CacheStrategy } from "./config";
 import type { Db } from "./db";
 import type { Metrics } from "./metrics";
+import { registerHttpCacheHeaders } from "./http-cache";
 import { produtoRoutes } from "./produtos/routes";
 import { ProdutoService } from "./produtos/service";
 
@@ -24,6 +25,8 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   app.addHook("onRequest", async (req) => {
     if (!req.url.startsWith("/internal") && req.url !== "/health") deps.metrics.requests++;
   });
+
+  registerHttpCacheHeaders(app, { strategy: deps.strategy, ttlSeconds: deps.ttlSeconds, metrics: deps.metrics });
 
   app.get("/health", async () => ({ status: "ok", estrategia: deps.strategy }));
 

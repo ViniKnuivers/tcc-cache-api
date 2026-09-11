@@ -21,7 +21,8 @@
     "test": "vitest run",
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
-    "api:up": "docker compose up -d --wait --build api"
+    "api:up": "docker compose up -d --wait --build api",
+    "stack:up": "docker compose up -d --wait --build api nginx"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.10.0",

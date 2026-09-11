@@ -43,6 +43,15 @@ pnpm api:up         # em contêiner, com 1 CPU e 512 MB (como nos experimentos)
 pnpm test           # testes de integração (banco separado: catalogo_test)
 ```
 
+Subir a pilha completa numa estratégia (a carga entra pelo nginx, porta 8080):
+
+```bash
+CACHE_STRATEGY=redis pnpm stack:up     # none | memory | redis | http
+curl -i localhost:8080/produtos/42     # veja Cache-Control, ETag e X-Cache-Status
+```
+
+Todas as estratégias passam pelo nginx, para que o caminho de rede seja idêntico. Só na estratégia `http` a API marca as respostas como cacheáveis (`Cache-Control: public, max-age=TTL` + `ETag`); nas demais responde `no-store` e o nginx apenas repassa.
+
 Rotas: `GET /produtos?categoria=&pagina=&limite=`, `GET /produtos/:id`, `POST /produtos`, `PUT /produtos/:id`, `DELETE /produtos/:id`.
 
 O seed é determinístico e imprime um *fingerprint* (`239da9743c2035fc`), que deve ser igual em qualquer máquina.

@@ -1,61 +1,97 @@
 # Análise comparativa do impacto de estratégias de cache no desempenho de uma API REST
 
-Parte prática do Trabalho de Conclusão de Curso de Ciência da Computação (Faculdade Municipal Professor Franco Montoro, 2026).
+Parte prática do Trabalho de Conclusão de Curso de Ciência da Computação — Faculdade Municipal Professor Franco Montoro, 2026.
 
-> 🚧 Em construção. O passo a passo completo de reprodução entra na fase final.
+**Problema de pesquisa:** quais são os impactos das diferentes estratégias de cache no desempenho de uma API REST sob diferentes cargas de trabalho (predominância de escritas, carga mista e predominância de leituras)?
 
-## Problema de pesquisa
+| Documento | Conteúdo |
+|---|---|
+| [`docs/METODOLOGIA.md`](docs/METODOLOGIA.md) | protocolo experimental completo, parâmetros, justificativas e ameaças à validade |
+| [`docs/RESULTADOS.md`](docs/RESULTADOS.md) | tabelas, gráficos e testes estatísticos (gerado a partir dos dados) |
+| [`docs/PLANO.md`](docs/PLANO.md) | plano e status da parte prática |
+| [`results/final/`](results/final/) | dados brutos e consolidados dos experimentos, gráficos em PNG e tabelas em CSV |
 
-Quais são os impactos das diferentes estratégias de cache no desempenho de uma API REST sob diferentes cargas de trabalho (predominância de escritas, carga mista e predominância de leituras)?
+## O que foi construído
 
-## Desenho do experimento
-
-- **Aplicação:** API REST de catálogo de produtos de uma loja virtual (Node.js, Fastify, TypeScript, Prisma, PostgreSQL).
-- **Estratégias de cache** (variável `CACHE_STRATEGY`):
+- **API REST de catálogo de produtos** (Node.js 24, Fastify 5, TypeScript, Prisma 7, PostgreSQL 17.6). Rotas: `GET /produtos` (listagem paginada), `GET /produtos/:id`, `POST`, `PUT`, `PATCH` e `DELETE /produtos/:id`.
+- **Quatro configurações de cache no mesmo código**, escolhidas pela variável `CACHE_STRATEGY`:
   - `none`: sem cache (linha de base);
-  - `memory`: cache em memória (LRU) dentro do processo da API;
+  - `memory`: cache em memória no processo (LRU + TTL);
   - `redis`: cache distribuído no Redis (*cache-aside*);
-  - `http`: cache HTTP (`Cache-Control` + `ETag`), com o nginx como cache intermediário.
-- **Invalidação:** TTL combinado com invalidação nas operações de escrita.
-- **Cargas (k6):** leituras predominantes (90/10), mista (50/50) e escritas predominantes (10/90), com acesso concentrado em poucos produtos (distribuição Zipf).
-- **Métricas:** latência p50/p95/p99, throughput, CPU e memória, taxa de acerto do cache e acessos ao banco.
+  - `http`: cache HTTP (`Cache-Control` + `ETag`, com resposta 304), com o nginx como cache intermediário.
+- **Invalidação:** TTL (60 s) combinado com invalidação por escrita (produto + versão das listagens).
+- **Carga com k6:** leitura (90/10), mista (50/50) e escrita (10/90), com popularidade Zipf.
+- **Runner de experimentos** com o mesmo protocolo em todas as medições:
+  - restauração do banco;
+  - caches vazios;
+  - aquecimento;
+  - medição com coleta de latência, throughput, CPU/memória, taxa de acerto e acessos ao banco.
+- **Análise estatística e gráficos** prontos para a monografia.
 
 ## Pré-requisitos
 
-- Node.js 20+ (referência: 24 LTS) e pnpm (`corepack enable`)
-- Docker + Docker Compose
-- k6
+- Node.js 20+ (referência: 24 LTS, ver `.nvmrc`) e pnpm (`corepack enable`)
+- Docker e Docker Compose (VM com pelo menos 8 CPUs e 4 GB de memória)
+- Python 3.9+ (apenas para a análise)
 
-## Início rápido
+O k6 roda em contêiner; não é preciso instalá-lo.
+
+## Reprodução completa
 
 ```bash
+# 1. Dependências e banco
 corepack enable && pnpm install
 cp .env.example .env
-pnpm db:up          # Postgres (porta 5434) e Redis (porta 6380)
-pnpm db:setup       # migrações + dados sintéticos (50 categorias, 10.000 produtos)
+pnpm db:up            # PostgreSQL (porta 5434) e Redis (porta 6380)
+pnpm db:setup         # migrações + seed (50 categorias, 10.000 produtos)
+
+# 2. Testes
+pnpm test             # testes de integração da API e das estratégias (vitest)
+pnpm py:setup         # ambiente Python da análise (uma vez)
+pnpm test:py          # testes das funções estatísticas
+
+# 3. Experimentos (cada um pode ser interrompido com Ctrl+C e retomado com --run-id)
+pnpm experimento calibrar                 # E0: mostra a taxa sugerida (~30 min)
+pnpm experimento latencia --taxa <taxa>   # E1: 60 medições (~1h45)
+pnpm experimento capacidade               # E2: throughput máximo sustentável (~2h30)
+pnpm experimento consistencia             # E3: leituras desatualizadas após escrita (~5 min)
+
+# 4. Análise: gráficos, tabelas, testes estatísticos e docs/RESULTADOS.md
+pnpm analise
 ```
 
-Rodar a API:
+- **Conferência do seed:** o `db:setup` imprime o *fingerprint* `239da9743c2035fc`. Se o valor for outro, o estado inicial do banco é diferente.
+- **Recursos durante os experimentos:** feche outros programas pesados. Os resultados valem para a máquina em que foram obtidos (registrada em `run.json`).
+
+### Comandos úteis
 
 ```bash
-pnpm dev            # local, recarrega ao salvar (porta 3000)
-pnpm api:up         # em contêiner, com 1 CPU e 512 MB (como nos experimentos)
-pnpm test           # testes de integração (banco separado: catalogo_test)
+pnpm dev                                  # API local com recarga (porta 3000)
+CACHE_STRATEGY=redis pnpm stack:up        # pilha completa numa estratégia (entrada pelo nginx, porta 8080)
+curl -i localhost:8080/produtos/42        # veja Cache-Control, ETag e X-Cache-Status
+pnpm experimento latencia --dry-run       # mostra o plano (ordem sorteada) sem executar
+pnpm experimento relatorio --run-id <id>  # regenera medicoes.csv e resumo.json de uma rodada
 ```
 
-Subir a pilha completa numa estratégia (a carga entra pelo nginx, porta 8080):
+## Estrutura
 
-```bash
-CACHE_STRATEGY=redis pnpm stack:up     # none | memory | redis | http
-curl -i localhost:8080/produtos/42     # veja Cache-Control, ETag e X-Cache-Status
 ```
-
-Todas as estratégias passam pelo nginx, para que o caminho de rede seja idêntico. Só na estratégia `http` a API marca as respostas como cacheáveis (`Cache-Control: public, max-age=TTL` + `ETag`); nas demais responde `no-store` e o nginx apenas repassa.
-
-Rotas: `GET /produtos?categoria=&pagina=&limite=`, `GET /produtos/:id`, `POST /produtos`, `PUT /produtos/:id`, `DELETE /produtos/:id`.
-
-O seed é determinístico e imprime um *fingerprint* (`239da9743c2035fc`), que deve ser igual em qualquer máquina.
+src/
+  app.ts, server.ts         aplicação Fastify e ponto de entrada
+  produtos/                 rotas e serviço (cache-aside + invalidação por escrita)
+  cache/                    estratégias memory (LRU) e redis; interface comum
+  http-cache.ts             Cache-Control, ETag e 304 (estratégia http)
+  metrics.ts                contadores internos (requisições, banco, acertos)
+  experimento/              runner: ambiente Docker, k6, coleta, consistência, relatório
+prisma/                     schema, migrações e seed determinístico
+k6/carga.js                 carga de trabalho (taxa constante, Zipf, 3 cargas)
+nginx/nginx.conf            nginx à frente da API (cache compartilhado na estratégia http)
+scripts/                    CLI dos experimentos, análise (Python) e estatística
+tests/                      testes vitest (API, estratégias, cache HTTP, seed)
+docs/                       plano, metodologia e resultados
+results/final/              dados e figuras dos experimentos finais
+```
 
 ## Licença
 
-Código sob [MIT](LICENSE).
+Código sob a licença [MIT](LICENSE).

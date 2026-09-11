@@ -13,6 +13,20 @@ export const CONTAINERS = {
   nginx: "tcc-cache-nginx",
 } as const;
 
+/** Nome fixo do contêiner do k6 durante a medição (para amostrar sua CPU). */
+export const K6_CONTAINER = "tcc-cache-k6";
+
+/** Espera um contêiner entrar em execução (até timeoutMs). */
+export async function aguardarContainer(name: string, timeoutMs = 15_000): Promise<boolean> {
+  const t0 = Date.now();
+  while (Date.now() - t0 < timeoutMs) {
+    const r = await run("docker", ["inspect", "-f", "{{.State.Running}}", name], { allowFail: true });
+    if (r.stdout.trim() === "true") return true;
+    await new Promise((res) => setTimeout(res, 200));
+  }
+  return false;
+}
+
 /** Constrói a imagem da API uma vez por rodada e devolve o ID (vai para o run.json). */
 export async function buildApi(): Promise<string> {
   await run("docker", ["compose", "build", "api"]);

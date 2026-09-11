@@ -52,6 +52,8 @@ const COLUNAS: Array<[string, (m: Medicao) => unknown]> = [
   ["redis_cpu_media", (m) => m.recursos["tcc-cache-redis"]?.cpuMedia],
   ["redis_mem_media_mib", (m) => m.recursos["tcc-cache-redis"]?.memMediaMiB],
   ["nginx_cpu_media", (m) => m.recursos["tcc-cache-nginx"]?.cpuMedia],
+  ["k6_cpu_media", (m) => m.recursos["tcc-cache-k6"]?.cpuMedia],
+  ["k6_cpu_max", (m) => m.recursos["tcc-cache-k6"]?.cpuMax],
   ["sustentavel", (m) => (m.sustentavel ? 1 : 0)],
 ];
 

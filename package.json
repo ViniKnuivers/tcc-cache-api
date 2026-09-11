@@ -23,7 +23,10 @@
     "start": "tsx src/server.ts",
     "api:up": "docker compose up -d --wait --build api",
     "stack:up": "docker compose up -d --wait --build api nginx",
-    "experimento": "tsx scripts/experimento.ts"
+    "experimento": "tsx scripts/experimento.ts",
+    "py:setup": "python3 -m venv .venv && .venv/bin/pip install -r scripts/requirements.txt",
+    "analise": "sh -c 'if [ -x .venv/bin/python ]; then PY=.venv/bin/python; else PY=python3; fi; $PY scripts/analise.py \"$@\"' --",
+    "test:py": "sh -c 'cd scripts && ../.venv/bin/python -m unittest test_estatistica'"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.10.0",

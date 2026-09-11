@@ -18,7 +18,9 @@ import { createDb, type Db } from "../db";
 import type { MetricsSnapshot } from "../metrics";
 import {
   CONTAINERS,
+  K6_CONTAINER,
   StatsSampler,
+  aguardarContainer,
   buildApi,
   lerMetricasApi,
   lerPgStats,
@@ -241,11 +243,23 @@ export class Rodada {
       await resetarPgStats();
 
       const arquivo = `${this.meta.runId}/k6/${etapa.chave.replace(/\|/g, "_")}.json`;
+      // O k6 roda em contêiner de nome fixo; a amostragem começa assim que ele
+      // sobe e inclui o próprio k6 (verifica que o gerador não é o gargalo).
       const sampler = new StatsSampler();
-      sampler.start(Object.values(CONTAINERS));
+      const k6Run = runK6({
+        workload: etapa.carga,
+        rate: etapa.taxa,
+        duration: `${cfg.duracaoS}s`,
+        phase: "medicao",
+        seed: cfg.seed,
+        summaryRelPath: arquivo,
+        containerName: K6_CONTAINER,
+      });
       let recursos: Record<string, ResourceUsage>;
       try {
-        await runK6({ workload: etapa.carga, rate: etapa.taxa, duration: `${cfg.duracaoS}s`, phase: "medicao", seed: cfg.seed, summaryRelPath: arquivo });
+        const k6Up = await aguardarContainer(K6_CONTAINER);
+        sampler.start([...Object.values(CONTAINERS), ...(k6Up ? [K6_CONTAINER] : [])]);
+        await k6Run;
       } finally {
         recursos = sampler.stop();
       }

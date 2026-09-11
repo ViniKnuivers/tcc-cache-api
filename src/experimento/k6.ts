@@ -15,6 +15,8 @@ export interface K6Params {
   seed: number;
   /** Caminho do resumo JSON relativo a results/ (mapeado em /results no contêiner). */
   summaryRelPath?: string;
+  /** Nome fixo do contêiner (permite amostrar o uso de CPU do próprio k6). */
+  containerName?: string;
 }
 
 export interface Latencias {
@@ -51,7 +53,10 @@ export async function runK6(p: K6Params): Promise<void> {
     "-e", `SEED=${p.seed}`,
   ];
   if (p.summaryRelPath) env.push("-e", `SUMMARY_PATH=/results/${p.summaryRelPath}`);
-  await run("docker", ["compose", "--profile", "carga", "run", "--rm", ...env, "k6", "run", "--quiet", "/scripts/carga.js"]);
+  const name = p.containerName ? ["--name", p.containerName] : [];
+  // Remove um contêiner homônimo que tenha sobrado de uma execução interrompida.
+  if (p.containerName) await run("docker", ["rm", "-f", p.containerName], { allowFail: true });
+  await run("docker", ["compose", "--profile", "carga", "run", "--rm", ...name, ...env, "k6", "run", "--quiet", "/scripts/carga.js"]);
 }
 
 type MetricValues = Record<string, number>;

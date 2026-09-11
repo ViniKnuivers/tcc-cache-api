@@ -17,6 +17,7 @@ __pycache__/
 results/*
 !results/.gitkeep
 !results/example/
+!results/final/
 
 # Sistema
 .DS_Store

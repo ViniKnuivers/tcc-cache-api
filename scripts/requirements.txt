@@ -1,0 +1,2 @@
+# Dependências da análise (scripts/analise.py). Instale com: pnpm py:setup
+matplotlib==3.9.4

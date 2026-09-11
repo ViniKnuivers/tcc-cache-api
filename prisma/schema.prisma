@@ -1,0 +1,37 @@
+// Modelo de dados: catálogo de produtos de uma loja virtual.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Categoria {
+  id       Int       @id @default(autoincrement())
+  nome     String    @db.VarChar(80)
+  slug     String    @unique @db.VarChar(80)
+  produtos Produto[]
+
+  @@map("categoria")
+}
+
+model Produto {
+  id           Int       @id @default(autoincrement())
+  sku          String    @unique @db.VarChar(20)
+  nome         String    @db.VarChar(160)
+  descricao    String
+  preco        Decimal   @db.Decimal(10, 2)
+  estoque      Int
+  ativo        Boolean   @default(true)
+  categoriaId  Int       @map("categoria_id")
+  categoria    Categoria @relation(fields: [categoriaId], references: [id])
+  criadoEm     DateTime  @default(now()) @map("criado_em")
+  atualizadoEm DateTime  @default(now()) @updatedAt @map("atualizado_em")
+
+  // Listagem paginada por categoria (a consulta mais frequente da API).
+  @@index([categoriaId, id])
+  @@map("produto")
+}

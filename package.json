@@ -1,0 +1,41 @@
+{
+  "name": "tcc-cache-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Análise comparativa do impacto de estratégias de cache no desempenho de uma API REST (TCC, Ciência da Computação).",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@12.3.4",
+  "scripts": {
+    "db:up": "docker compose up -d --wait postgres redis",
+    "db:down": "docker compose down",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:setup": "prisma migrate deploy && tsx prisma/seed.ts",
+    "prisma:generate": "prisma generate",
+    "postinstall": "prisma generate",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "dotenv": "17.4.2",
+    "fastify": "5.12.4",
+    "ioredis": "5.8.2",
+    "lru-cache": "11.5.2",
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "10.6.0",
+    "@types/node": "24.13.4",
+    "@types/pg": "8.23.1",
+    "prisma": "7.10.0",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vitest": "5.0.0"
+  }
+}

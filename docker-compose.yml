@@ -1,0 +1,65 @@
+# Serviços do experimento. Versões fixadas para reprodutibilidade.
+# Portas no host escolhidas para não colidir com outros serviços locais:
+#   Postgres 5434 · Redis 6380 (· API 3000 e nginx 8080 nas próximas fases)
+name: tcc-cache
+
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    container_name: tcc-cache-pg
+    environment:
+      POSTGRES_USER: catalogo
+      POSTGRES_PASSWORD: catalogo
+      POSTGRES_DB: catalogo
+      TZ: UTC
+      PGTZ: UTC
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    command:
+      - postgres
+      - -c
+      - shared_buffers=128MB
+      - -c
+      - max_connections=50
+      # Estatísticas de consultas (contagem de acessos ao banco por execução).
+      - -c
+      - shared_preload_libraries=pg_stat_statements
+      - -c
+      - pg_stat_statements.track=all
+    cpus: 2
+    mem_limit: 1g
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U catalogo -d catalogo"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7.4.11-alpine
+    container_name: tcc-cache-redis
+    # Redis como cache puro: sem persistência em disco, com limite de memória
+    # e descarte LRU quando cheio.
+    command:
+      - redis-server
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --maxmemory
+      - 128mb
+      - --maxmemory-policy
+      - allkeys-lru
+    ports:
+      - "6380:6379"
+    cpus: 1
+    mem_limit: 256m
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  pgdata:

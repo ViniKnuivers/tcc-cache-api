@@ -1,0 +1,23 @@
+# Dependências e builds
+node_modules/
+dist/
+coverage/
+/src/generated/
+
+# Segredos
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+
+# Resultados dos experimentos (versione só exemplos explícitos)
+results/*
+!results/.gitkeep
+!results/example/
+
+# Sistema
+.DS_Store
+*.log

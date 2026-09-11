@@ -32,8 +32,14 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
 
   // --- Endpoints internos usados pelo runner do experimento ---------------------
   app.get("/internal/metrics", async () => ({ estrategia: deps.strategy, ...deps.metrics.snapshot() }));
+  // Esvazia o cache da aplicação e zera as métricas (início de uma execução).
   app.post("/internal/reset", async () => {
     await deps.cache.clear();
+    deps.metrics.reset();
+    return { ok: true };
+  });
+  // Zera só as métricas, mantendo o cache aquecido (fim do aquecimento).
+  app.post("/internal/metrics/reset", async () => {
     deps.metrics.reset();
     return { ok: true };
   });

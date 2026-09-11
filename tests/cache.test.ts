@@ -124,6 +124,13 @@ describe.each(factories)("serviço com cache %s (cache-aside)", (name, factory) 
     expect((await get(`/produtos/${criado.id}`)).statusCode).toBe(404);
   });
 
+  it("/internal/metrics/reset zera as métricas mas mantém o cache aquecido", async () => {
+    await get("/produtos/16");
+    await ctx.app.inject({ method: "POST", url: "/internal/metrics/reset" });
+    await get("/produtos/16");
+    expect(await metrics()).toMatchObject({ cacheHits: 1, cacheMisses: 0, dbQueries: 0 });
+  });
+
   it("404 não é armazenado no cache", async () => {
     await ctx.app.inject({ method: "POST", url: "/internal/reset" });
     await get("/produtos/999999");

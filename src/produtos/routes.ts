@@ -2,7 +2,8 @@
 //   GET    /produtos?categoria=&pagina=&limite=   listagem paginada (só ativos)
 //   GET    /produtos/:id                          consulta
 //   POST   /produtos                              criação
-//   PUT    /produtos/:id                          atualização
+//   PUT    /produtos/:id                          atualização completa
+//   PATCH  /produtos/:id                          atualização parcial (ex.: preço, estoque)
 //   DELETE /produtos/:id                          remoção
 // Os JSON Schemas validam a entrada e aceleram a serialização da saída.
 import type { FastifyInstance } from "fastify";
@@ -142,6 +143,18 @@ export async function produtoRoutes(app: FastifyInstance, opts: { service: Produ
       },
     },
     async (req) => service.atualizar(req.params.id, req.body),
+  );
+
+  app.patch<{ Params: IdParams; Body: Partial<ProdutoInput> }>(
+    "/produtos/:id",
+    {
+      schema: {
+        params: idParams,
+        body: { type: "object", additionalProperties: false, minProperties: 1, properties: camposEditaveis },
+        response: { 200: produtoSchema, 404: erroSchema, 422: erroSchema },
+      },
+    },
+    async (req) => service.atualizarParcial(req.params.id, req.body),
   );
 
   app.delete<{ Params: IdParams }>(

@@ -140,6 +140,17 @@ export class ProdutoService {
     }
   }
 
+  /** Atualização parcial (ex.: preço e estoque), a escrita mais comum num catálogo. */
+  async atualizarParcial(id: number, input: Partial<ProdutoInput>): Promise<ProdutoDTO> {
+    try {
+      const p = await this.prisma.produto.update({ where: { id }, data: input, include });
+      await this.invalidar(id);
+      return toDTO(p);
+    } catch (err) {
+      mapPrismaError(err);
+    }
+  }
+
   async remover(id: number): Promise<void> {
     try {
       await this.prisma.produto.delete({ where: { id } });

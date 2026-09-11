@@ -108,6 +108,12 @@ describe.each(factories)("serviço com cache %s (cache-aside)", (name, factory) 
     expect((await get("/produtos/8")).json().nome).toBe("Nome Novo");
   });
 
+  it("PATCH também invalida o produto", async () => {
+    await get("/produtos/15");
+    await ctx.app.inject({ method: "PATCH", url: "/produtos/15", payload: { estoque: 321 } });
+    expect((await get("/produtos/15")).json().estoque).toBe(321);
+  });
+
   it("escritas invalidam todas as listagens", async () => {
     const antes = (await get("/produtos?categoria=28&limite=100")).json();
     const criado = (await ctx.app.inject({ method: "POST", url: "/produtos", payload: { sku: `CACHE-${name}`, ...novoProduto } })).json();

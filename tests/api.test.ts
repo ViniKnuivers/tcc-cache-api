@@ -86,6 +86,15 @@ describe("escritas", () => {
     expect(missing.statusCode).toBe(404);
   });
 
+  it("PATCH altera só os campos enviados; corpo vazio → 400", async () => {
+    const antes = (await ctx.app.inject({ method: "GET", url: "/produtos/4" })).json();
+    const res = await ctx.app.inject({ method: "PATCH", url: "/produtos/4", payload: { preco: 12.34, estoque: 7 } });
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toMatchObject({ id: 4, nome: antes.nome, preco: 12.34, estoque: 7 });
+    expect((await ctx.app.inject({ method: "PATCH", url: "/produtos/4", payload: {} })).statusCode).toBe(400);
+    expect((await ctx.app.inject({ method: "PATCH", url: "/produtos/999999", payload: { estoque: 1 } })).statusCode).toBe(404);
+  });
+
   it("DELETE remove (204) e depois responde 404", async () => {
     expect((await ctx.app.inject({ method: "DELETE", url: "/produtos/3" })).statusCode).toBe(204);
     expect((await ctx.app.inject({ method: "GET", url: "/produtos/3" })).statusCode).toBe(404);

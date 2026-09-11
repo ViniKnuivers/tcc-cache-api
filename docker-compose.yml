@@ -108,5 +108,17 @@ services:
       api:
         condition: service_healthy
 
+  # Gerador de carga, na mesma rede dos serviços (evita o encaminhamento de
+  # portas do Docker Desktop, que vira gargalo em taxas altas no macOS).
+  # Uso: docker compose run --rm k6 run /scripts/carga.js  (perfil "carga")
+  k6:
+    image: grafana/k6:2.2.0
+    profiles: ["carga"]
+    volumes:
+      - ./k6:/scripts:ro
+      - ./results:/results
+    cpus: 2
+    mem_limit: 512m
+
 volumes:
   pgdata:

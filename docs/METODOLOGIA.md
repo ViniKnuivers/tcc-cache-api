@@ -75,6 +75,7 @@ Gerada com **k6 2.2.0** (`k6/carga.js`) no modelo de **taxa de chegada constante
 
 Idêntico para todas as estratégias (`src/experimento/runner.ts`):
 
+0. **Condições da máquina** (`src/experimento/energia.ts`): a medição só começa com o carregador conectado e a tampa do notebook aberta; se não, o runner pausa e espera. Ao final, verifica se o sistema suspendeu durante a medição (mudança de `kern.waketime` no macOS ou diferença entre o relógio de parede e o monotônico). Se suspendeu, a medição é descartada e repetida. A energia e a tampa ficam registradas em cada medição (`condicoes`).
 1. Restaura o banco ao estado inicial (seed determinístico).
 2. Recria os contêineres da API (com a estratégia) e do nginx e esvazia o Redis. O processo da API é novo e **todos os caches começam vazios**.
 3. **Aquecimento:** k6 com a mesma carga e taxa da medição. O resultado é descartado. Serve para aquecer o JIT do Node.js, o pool de conexões e os caches.
@@ -144,6 +145,8 @@ Este experimento mede o compromisso da estratégia HTTP: o intermediário não �
 
 ## 7. Ameaças à validade
 
+- **Suspensão do sistema:** no macOS, o `caffeinate` não impede o repouso com a tampa fechada ou na bateria. Uma primeira execução completa foi invalidada por isso (371 eventos de repouso durante a madrugada; latências de minutos) e descartada por inteiro.
+  - Mitigação: verificação de energia e tampa antes de cada medição e detecção de suspensão depois dela, com repetição automática (passo 0 do protocolo).
 - **Perturbações transitórias da máquina:** pausas curtas (sistema operacional, virtualização do Docker) afetam medições isoladas.
   - Mitigação: confirmação dos degraus reprovados (E0, E2); no E1, 5 repetições em ordem sorteada, gráficos pela mediana e testes não paramétricos, que são robustos a uma repetição atípica. Nenhuma medição é descartada ou refeita manualmente.
 - **Mesma máquina para carga e sistema:** o k6 e os serviços dividem o hardware.

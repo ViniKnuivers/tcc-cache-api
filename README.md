@@ -62,6 +62,7 @@ pnpm analise
 
 - **Conferência do seed:** o `db:setup` imprime o *fingerprint* `239da9743c2035fc`. Se o valor for outro, o estado inicial do banco é diferente.
 - **Recursos durante os experimentos:** feche outros programas pesados. Os resultados valem para a máquina em que foram obtidos (registrada em `run.json`).
+- **Notebook:** mantenha o carregador conectado e a tampa aberta. O runner pausa sozinho se não estiver assim e repete qualquer medição em que o sistema tenha suspendido.
 
 ### Comandos úteis
 

@@ -16,7 +16,7 @@ Objetivo: entregar a parte prática **completa e fechada**, com experimentos exe
 | 8 | Amostragem de CPU do próprio k6 (prova de que o gerador não é o gargalo) | ⏳ |
 | 9 | Análise: tabelas, gráficos e testes estatísticos | ⏳ |
 | 10 | Documentação: README, metodologia e resultados | ⏳ |
-| 11 | Robustez do protocolo: confirmação de degraus reprovados, janela de amostragem alinhada ao cenário, tabelas Zipf compartilhadas entre VUs | ⏳ |
+| 11 | Robustez do protocolo: confirmação de degraus reprovados, janela de amostragem alinhada ao cenário, tabelas Zipf compartilhadas entre VUs, verificação de energia/tampa e repetição de medições com suspensão do sistema | ⏳ |
 
 ## 2. Experimentos
 

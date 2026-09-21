@@ -32,6 +32,7 @@ import {
   type ResourceUsage,
 } from "./ambiente";
 import { lerResumoK6, runK6, type K6Resultado, type Workload } from "./k6";
+import { aguardarCondicoes, condicoes, vigiarSuspensao, type Condicoes } from "./energia";
 import { gitInfo, makeRunId, maquina, versoes, type GitInfo } from "./meta";
 import { RESULTS_DIR } from "./paths";
 
@@ -73,8 +74,19 @@ export interface Medicao {
   app: MetricsSnapshot;
   banco: PgStats;
   recursos: Record<string, ResourceUsage>;
+  /** Energia e tampa no início da medição (macOS). */
+  condicoes?: Condicoes;
   sustentavel: boolean;
 }
+
+/** O sistema suspendeu durante a medição: ela é descartada e repetida. */
+class Suspensao extends Error {
+  constructor(readonly segundos: number) {
+    super(`o sistema ficou suspenso ~${segundos.toFixed(0)} s durante a medição`);
+  }
+}
+
+const MAX_REPETICOES_SUSPENSAO = 5;
 
 interface Etapa {
   chave: string;
@@ -228,18 +240,35 @@ export class Rodada {
     return () => process.off("SIGINT", handler);
   }
 
-  /** Executa (ou recupera, se já feita) uma medição. Devolve null se falhar. */
+  /**
+   * Executa (ou recupera, se já feita) uma medição. Devolve null se falhar.
+   * Espera o carregador e a tampa aberta antes de começar; se o sistema
+   * suspender durante a medição, ela é descartada e repetida.
+   */
   async medir(etapa: Etapa): Promise<Medicao | null> {
     const pronta = this.feitas.get(etapa.chave);
     if (pronta) return pronta;
-    const cfg = this.cfg;
     const ordem = ++this.ordem;
+    for (let i = 1; i <= MAX_REPETICOES_SUSPENSAO; i++) {
+      if (this.interrompida) return null;
+      await aguardarCondicoes();
+      const m = await this.medirUmaVez(etapa, ordem);
+      if (m !== "suspensa") return m;
+    }
+    console.error(`  ✗ ${etapa.chave}: o sistema suspendeu em ${MAX_REPETICOES_SUSPENSAO} tentativas seguidas; medição não feita.`);
+    return null;
+  }
+
+  private async medirUmaVez(etapa: Etapa, ordem: number): Promise<Medicao | null | "suspensa"> {
+    const cfg = this.cfg;
     const tentativa = etapa.tentativa ?? 1;
     const rotulo =
       `${etapa.estrategia.padEnd(6)} ${etapa.carga.padEnd(7)} ${String(etapa.taxa).padStart(5)} req/s  rep ${etapa.repeticao}` +
       (tentativa > 1 ? " (confirmação)" : "");
     const t0 = Date.now();
     try {
+      const cond = await condicoes();
+      const suspensao = await vigiarSuspensao();
       this.db ??= createDb(config.databaseUrl, 2);
       await resetDatabase(this.db, this.seedData);
       await subirPilha(etapa.estrategia, cfg.ttlS);
@@ -269,6 +298,8 @@ export class Rodada {
         sampler.stop();
       }
       const [app, banco] = await Promise.all([lerMetricasApi(), lerPgStats()]);
+      const suspensoS = await suspensao();
+      if (suspensoS > 0) throw new Suspensao(suspensoS);
       const k6 = lerResumoK6(arquivo);
       // CPU/memória só da janela do cenário (exclui a inicialização dos VUs do k6).
       const recursos: Record<string, ResourceUsage> = sampler.resumo(
@@ -294,6 +325,7 @@ export class Rodada {
         app,
         banco,
         recursos,
+        condicoes: cond,
         sustentavel: sustentavel(k6, etapa.taxa, cfg.duracaoS),
       };
       appendFileSync(this.medicoesFile, `${JSON.stringify(m)}\n`);
@@ -308,6 +340,10 @@ export class Rodada {
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       appendFileSync(this.falhasFile, `${JSON.stringify({ chave: etapa.chave, em: new Date().toISOString(), erro: msg })}\n`);
+      if (err instanceof Suspensao) {
+        console.warn(`  ⚠ ${rotulo}  ${msg}; medição descartada e repetida.`);
+        return "suspensa";
+      }
       console.error(`  ✗ ${rotulo}  falhou: ${msg.split("\n")[0]}`);
       return null;
     }

@@ -18,6 +18,7 @@ import { generateSeedData, resetDatabase } from "../../prisma/seed";
 import { config, type CacheStrategy } from "../config";
 import { createDb } from "../db";
 import { subirInfra, subirPilha, buildApi } from "./ambiente";
+import { aguardarCondicoes, vigiarSuspensao } from "./energia";
 import { gitInfo, makeRunId, maquina, versoes } from "./meta";
 import { RESULTS_DIR } from "./paths";
 import { shuffled } from "./runner";
@@ -138,7 +139,18 @@ export async function experimentoConsistencia(opts: {
   console.log(`Consistência: ${opts.n} produtos por estratégia, TTL ${opts.ttlS}s → ${path.relative(process.cwd(), dir)}/`);
   const resultados: ResultadoConsistencia[] = [];
   for (const estrategia of opts.estrategias) {
-    const r = await medirConsistencia(estrategia, opts);
+    // Mesma proteção das outras medições: carregador e tampa aberta; se o
+    // sistema suspender no meio, a janela medida seria falsa → repete.
+    let r: ResultadoConsistencia | null = null;
+    for (let i = 1; i <= 5 && !r; i++) {
+      await aguardarCondicoes();
+      const suspensao = await vigiarSuspensao();
+      const tentativa = await medirConsistencia(estrategia, opts);
+      const s = await suspensao();
+      if (s > 0) console.warn(`  ⚠ ${estrategia}: o sistema ficou suspenso ~${s.toFixed(0)} s; repetindo.`);
+      else r = tentativa;
+    }
+    if (!r) throw new Error(`Consistência (${estrategia}): o sistema suspendeu em 5 tentativas seguidas.`);
     resultados.push(r);
     console.log(
       `  ✓ ${estrategia.padEnd(6)} desatualizadas logo após a escrita: ${r.desatualizadasImediatas}/${r.n} (${r.pctDesatualizadas}%)` +

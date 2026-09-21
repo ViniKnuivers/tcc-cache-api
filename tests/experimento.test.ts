@@ -2,6 +2,7 @@
 // critério de sustentabilidade, confirmação de degraus e cálculo da capacidade.
 import { describe, expect, it } from "vitest";
 import { resumirAmostras, type Amostra } from "../src/experimento/ambiente";
+import { condicoesOk } from "../src/experimento/energia";
 import type { K6Resultado } from "../src/experimento/k6";
 import { capacidades, chaveDe, sustentavel, type Medicao } from "../src/experimento/runner";
 
@@ -53,6 +54,15 @@ function k6(p95: number, descartadas: number, taxaErros = 0): K6Resultado {
     inicioMs: null,
   };
 }
+
+describe("condicoesOk", () => {
+  it("só mede com carregador conectado e tampa aberta (ou quando não se aplica)", () => {
+    expect(condicoesOk({ energia: "AC", tampaFechada: false })).toBe(true);
+    expect(condicoesOk({ energia: null, tampaFechada: null })).toBe(true); // desktop / outro sistema
+    expect(condicoesOk({ energia: "bateria", tampaFechada: false })).toBe(false);
+    expect(condicoesOk({ energia: "AC", tampaFechada: true })).toBe(false);
+  });
+});
 
 describe("sustentavel", () => {
   it("exige p95 < 100 ms, < 1% descartadas e < 1% de erros", () => {

@@ -13,6 +13,7 @@ LOG=results/rodar-tudo.log
 mkdir -p results
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG"; }
+avisar() { osascript -e "display notification \"$1\" with title \"TCC: experimentos\"" 2>/dev/null; }
 
 aguardar_docker() {
   docker info >/dev/null 2>&1 && return 0
@@ -31,6 +32,7 @@ while [ "$tentativa" -le 5 ]; do
   log "Tentativa $tentativa de 5"
   if aguardar_docker && caffeinate -dimsu pnpm experimento tudo >>"$LOG" 2>&1; then
     log "CONCLUÍDO. Próximo passo: pnpm analise"
+    avisar "Concluído. Resultados em results/final/"
     exit 0
   fi
   log "O processo parou com erro; continuando de onde parou em 1 min."
@@ -38,4 +40,5 @@ while [ "$tentativa" -le 5 ]; do
   sleep 60
 done
 log "FALHOU após 5 tentativas. Veja o log acima."
+avisar "Falhou após 5 tentativas. Veja results/rodar-tudo.log"
 exit 1

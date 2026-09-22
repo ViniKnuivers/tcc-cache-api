@@ -187,6 +187,7 @@ export class Rodada {
       const file = path.join(RESULTS_DIR, retomarId, "run.json");
       if (!existsSync(file)) throw new Error(`Rodada ${retomarId} não encontrada em results/`);
       const meta = JSON.parse(readFileSync(file, "utf8")) as RunMeta;
+      await subirInfra(); // após uma queda, o PostgreSQL e o Redis podem estar parados
       meta.retomadas.push({ em: new Date().toISOString(), git: git.label });
       const r = new Rodada(meta, git);
       r.salvarMeta();

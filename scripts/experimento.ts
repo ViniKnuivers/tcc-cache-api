@@ -5,11 +5,11 @@
 //   pnpm experimento capacidade [--taxas 400,600,...] [--reps 3]
 //   pnpm experimento consistencia [--n 100] [--ttl 60]
 //   pnpm experimento relatorio  --run-id <id>
-//   pnpm experimento tudo         (E0 → E1 com a taxa calibrada → E2 → E3 → results/final/)
+//   pnpm experimento tudo         (E0 → E1 com a taxa calibrada → E2 → E3 → results/final/; retomável)
 //
 // Opções comuns: --aquecimento <s> --duracao <s> --ttl <s> --seed <n>
 //                --run-id <id> (retoma uma rodada) --dry-run (mostra o plano)
-import { mkdirSync, renameSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
 import { CACHE_STRATEGIES, type CacheStrategy } from "../src/config";
@@ -205,44 +205,87 @@ async function main(): Promise<void> {
   console.log(`\n✓ ${r.medicoes().length} medições em ${path.relative(RESULTS_DIR, r.dir)}.${faltam}`);
 }
 
-/** Executa uma rodada completa de um tipo e devolve a rodada (sem imprimir o plano). */
-async function executar(cfg: Config): Promise<Rodada> {
-  const r = await Rodada.abrir(cfg);
+/**
+ * Executa uma rodada (nova ou retomada) até o fim. Faz uma segunda passagem,
+ * que pula o que já foi medido e repete só as medições que falharam.
+ */
+async function executar(cfg: Config, retomarId: string | undefined, aoAbrir: (runId: string) => void): Promise<Rodada> {
+  const r = await Rodada.abrir(cfg, retomarId);
+  aoAbrir(r.meta.runId);
   console.log(`\n=== ${cfg.tipo.toUpperCase()} → ${path.relative(process.cwd(), r.dir)}/ ===`);
   const desinstalar = r.instalarInterrupcao();
   try {
-    if (cfg.tipo === "latencia") await experimentoLatencia(r);
-    else await experimentoDegraus(r);
+    for (let passagem = 1; passagem <= 2 && !r.interrompida; passagem++) {
+      if (cfg.tipo === "latencia") await experimentoLatencia(r);
+      else await experimentoDegraus(r);
+    }
   } finally {
     desinstalar();
     escreverRelatorio(r.dir, r.medicoes());
-    imprimirResumo(cfg, r.medicoes());
+    imprimirResumo(r.cfg, r.medicoes());
     await r.fechar();
   }
-  if (r.interrompida) throw new Error(`Interrompido. Retome com: pnpm experimento ${cfg.tipo === "calibracao" ? "calibrar" : cfg.tipo} --run-id ${r.meta.runId}`);
+  if (r.interrompida) throw new Error("Interrompido. Rode `pnpm experimento tudo` de novo para continuar de onde parou.");
   return r;
 }
 
+/** Progresso do `tudo`, para retomar de onde parou se o processo cair. */
+interface EstadoTudo {
+  seed: number;
+  calibracao?: string;
+  taxaLatencia?: number;
+  latencia?: string;
+  capacidade?: string;
+  consistencia?: string;
+}
+
+const ESTADO_TUDO = path.join(RESULTS_DIR, "tudo-em-andamento.json");
+
 /**
- * Sequência completa dos experimentos finais. Ao terminar, move as rodadas
- * para results/final/ (a análise usa essa pasta por padrão).
+ * Sequência completa dos experimentos finais: E0 → E1 (taxa calibrada) → E2 → E3.
+ * Retomável: se o processo cair, rodar de novo continua de onde parou (as
+ * medições já feitas são aproveitadas). Ao terminar, move as rodadas para
+ * results/final/ (a análise usa essa pasta por padrão).
  */
 async function tudo(seed: number): Promise<void> {
   const t0 = Date.now();
-  const cal = await executar({ tipo: "calibracao", ...DEFAULTS.calibracao, seed });
-  const sugestao = taxaSugerida(cal.medicoes(), cal.cfg.taxas);
-  if (!sugestao.taxa) {
-    throw new Error(`A linha de base não sustentou o menor degrau da calibração (${Math.min(...cal.cfg.taxas)} req/s) em alguma carga. Rode com degraus menores (--taxas).`);
+  const estado: EstadoTudo = existsSync(ESTADO_TUDO) ? (JSON.parse(readFileSync(ESTADO_TUDO, "utf8")) as EstadoTudo) : { seed };
+  if (estado.calibracao) console.log(`↻ Continuando a sequência iniciada antes (${path.relative(process.cwd(), ESTADO_TUDO)}).`);
+  const salvar = () => writeFileSync(ESTADO_TUDO, `${JSON.stringify(estado, null, 2)}\n`);
+  salvar();
+
+  const cal = await executar({ tipo: "calibracao", ...DEFAULTS.calibracao, seed: estado.seed }, estado.calibracao, (id) => {
+    estado.calibracao = id;
+    salvar();
+  });
+  if (!estado.taxaLatencia) {
+    const sugestao = taxaSugerida(cal.medicoes(), cal.cfg.taxas);
+    if (!sugestao.taxa) {
+      throw new Error(`A linha de base não sustentou o menor degrau da calibração (${Math.min(...cal.cfg.taxas)} req/s) em alguma carga. Rode com degraus menores (--taxas).`);
+    }
+    if (sugestao.censurada) console.warn("⚠ Capacidade da linha de base acima do maior degrau da calibração; usando a sugestão mesmo assim.");
+    estado.taxaLatencia = sugestao.taxa;
+    salvar();
   }
-  if (sugestao.censurada) console.warn("⚠ Capacidade da linha de base acima do maior degrau da calibração; usando a sugestão mesmo assim.");
-  const lat = await executar({ tipo: "latencia", ...DEFAULTS.latencia, taxas: [sugestao.taxa], seed });
-  const cap = await executar({ tipo: "capacidade", ...DEFAULTS.capacidade, seed });
-  const consDir = await experimentoConsistencia({ estrategias: [...CACHE_STRATEGIES], n: 100, ttlS: 60, seed });
+  const lat = await executar({ tipo: "latencia", ...DEFAULTS.latencia, taxas: [estado.taxaLatencia], seed: estado.seed }, estado.latencia, (id) => {
+    estado.latencia = id;
+    salvar();
+  });
+  const cap = await executar({ tipo: "capacidade", ...DEFAULTS.capacidade, seed: estado.seed }, estado.capacidade, (id) => {
+    estado.capacidade = id;
+    salvar();
+  });
+  if (!estado.consistencia) {
+    console.log("\n=== CONSISTENCIA ===");
+    estado.consistencia = await experimentoConsistencia({ estrategias: [...CACHE_STRATEGIES], n: 100, ttlS: 60, seed: estado.seed });
+    salvar();
+  }
 
   const final = path.join(RESULTS_DIR, "final");
   mkdirSync(final, { recursive: true });
-  for (const dir of [cal.dir, lat.dir, cap.dir, consDir]) renameSync(dir, path.join(final, path.basename(dir)));
-  console.log(`\n✓ Experimentos concluídos em ${((Date.now() - t0) / 3_600_000).toFixed(1)} h. Rodadas em results/final/. Próximo passo: pnpm analise`);
+  for (const dir of [cal.dir, lat.dir, cap.dir, estado.consistencia]) renameSync(dir, path.join(final, path.basename(dir)));
+  rmSync(ESTADO_TUDO);
+  console.log(`\n✓ Experimentos concluídos (${((Date.now() - t0) / 3_600_000).toFixed(1)} h nesta execução). Rodadas em results/final/. Próximo passo: pnpm analise`);
 }
 
 main().catch((err: unknown) => {

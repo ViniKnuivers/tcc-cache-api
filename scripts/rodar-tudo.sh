@@ -27,6 +27,13 @@ aguardar_docker() {
   done
 }
 
+# Começa com o Docker recém-iniciado: a VM acumula estado ao longo de horas
+# (no ensaio, a latência degradou após ~3,5 h e só se recuperou reiniciando).
+if docker info >/dev/null 2>&1; then
+  log "Reiniciando o Docker Desktop antes de começar…"
+  docker desktop restart >/dev/null 2>&1
+fi
+
 tentativa=1
 while [ "$tentativa" -le 5 ]; do
   log "Tentativa $tentativa de 5"

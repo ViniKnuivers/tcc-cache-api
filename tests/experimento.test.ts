@@ -5,6 +5,7 @@ import { resumirAmostras, type Amostra } from "../src/experimento/ambiente";
 import { condicoesOk } from "../src/experimento/energia";
 import type { K6Resultado } from "../src/experimento/k6";
 import { capacidades, chaveDe, sustentavel, type Medicao } from "../src/experimento/runner";
+import { sentinelaOk } from "../src/experimento/sentinela";
 
 describe("resumirAmostras", () => {
   // Uma amostra por segundo: 5 s de inicialização do k6 (CPU 200%) e depois 10 s de cenário (CPU 50%).
@@ -99,5 +100,15 @@ describe("capacidades", () => {
   it("separa as repetições", () => {
     const caps = capacidades([med(400, true, 1, 1), med(600, false, 1, 1), med(600, false, 2, 1), med(400, true, 1, 2), med(600, true, 1, 2)]);
     expect(caps.map((c) => c.capacidade)).toEqual([400, 600]);
+  });
+});
+
+describe("sentinelaOk", () => {
+  it("aprova só com p95 < 25 ms, p99 < 50 ms e nenhuma descartada", () => {
+    expect(sentinelaOk(3.2, 7.1, 0)).toBe(true);
+    expect(sentinelaOk(25, 30, 0)).toBe(false);
+    expect(sentinelaOk(4, 244, 0)).toBe(false); // cauda degradada
+    expect(sentinelaOk(3, 7, 1)).toBe(false);
+    expect(sentinelaOk(799, 1000, 37)).toBe(false);
   });
 });

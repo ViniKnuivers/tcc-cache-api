@@ -81,7 +81,16 @@ Idêntico para todas as estratégias (`src/experimento/runner.ts`):
 3. **Aquecimento:** k6 com a mesma carga e taxa da medição. O resultado é descartado. Serve para aquecer o JIT do Node.js, o pool de conexões e os caches.
 4. Zera as métricas internas da API e as estatísticas do PostgreSQL. O cache continua aquecido.
 5. **Medição:** k6 com a carga e a taxa definidas. Em paralelo, o `docker stats` amostra CPU e memória de cada contêiner (≈2 amostras/s), incluindo o próprio k6. Só entram no resumo as amostras da janela do cenário: o k6 registra o instante em que o cenário começa (após inicializar os VUs), e a primeira amostra seguinte é descartada.
-6. **Coleta:** resumo do k6, métricas internas da API e `pg_stat_statements`. Tudo é gravado em `medicoes.jsonl`.
+6. **Coleta:** resumo do k6, métricas internas da API e `pg_stat_statements`. Tudo é gravado em `medicoes.jsonl`, junto com o swap e a memória livre do hospedeiro.
+
+**Sentinela de saúde do ambiente.** Antes da primeira medição e depois a cada 10, o runner repete uma medição de referência curta: sem cache, carga de leitura, 200 req/s, 15 s. Numa máquina saudável ela dá p95 ≈ 3 ms e p99 ≈ 7 ms. Se passar de p95 25 ms ou p99 50 ms, ou tiver alguma requisição descartada, o ambiente é considerado degradado:
+- o runner pausa 3 min e mede de novo;
+- se continuar degradado, reinicia o Docker e mede de novo;
+- se ainda assim não recuperar, interrompe com erro, sem gravar medições inválidas.
+
+Todas as sentinelas ficam em `sentinela.jsonl`. A sequência completa também começa com o Docker recém-reiniciado.
+
+Motivo: numa execução completa anterior, depois de ~3,5 h, a latência a 400 req/s passou de p95 ≈ 3 ms para 500–1.000 ms em **todas** as estratégias, inclusive nas que antes sustentavam 2.000 req/s. A causa estava na VM do Docker, que acumula estado com as centenas de contêineres recriados. Reiniciar o Docker devolveu o p95 a 3 ms. Essa execução foi descartada por inteiro; nenhum dado dela entra nos resultados.
 
 ## 4. Experimentos
 
@@ -147,6 +156,8 @@ Este experimento mede o compromisso da estratégia HTTP: o intermediário não �
 
 - **Suspensão do sistema:** no macOS, o `caffeinate` não impede o repouso com a tampa fechada ou na bateria. Uma primeira execução completa foi invalidada por isso (371 eventos de repouso durante a madrugada; latências de minutos) e descartada por inteiro.
   - Mitigação: verificação de energia e tampa antes de cada medição e detecção de suspensão depois dela, com repetição automática (passo 0 do protocolo).
+- **Degradação progressiva do ambiente:** execuções longas podem degradar a VM do Docker ou a memória do hospedeiro.
+  - Mitigação: sentinela de saúde a cada 10 medições, com recuperação automática e interrupção se não recuperar; swap do hospedeiro registrado em cada medição.
 - **Perturbações transitórias da máquina:** pausas curtas (sistema operacional, virtualização do Docker) afetam medições isoladas.
   - Mitigação: confirmação dos degraus reprovados (E0, E2); no E1, 5 repetições em ordem sorteada, gráficos pela mediana e testes não paramétricos, que são robustos a uma repetição atípica. Nenhuma medição é descartada ou refeita manualmente.
 - **Mesma máquina para carga e sistema:** o k6 e os serviços dividem o hardware.

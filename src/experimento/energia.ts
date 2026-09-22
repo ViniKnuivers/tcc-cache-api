@@ -81,3 +81,20 @@ export async function vigiarSuspensao(): Promise<() => Promise<number>> {
     return diferencaRelogios > 2 ? diferencaRelogios : 0;
   };
 }
+
+export interface MemoriaHost {
+  /** Swap em uso no sistema hospedeiro (MiB). */
+  swapMiB: number | null;
+  /** Memória livre segundo o `memory_pressure` do macOS (%). */
+  livrePct: number | null;
+}
+
+/** Memória do hospedeiro (macOS). Swap alto indica que a VM do Docker pode estar sendo paginada. */
+export async function memoriaHost(): Promise<MemoriaHost> {
+  if (!MAC) return { swapMiB: null, livrePct: null };
+  const sw = await run("sysctl", ["-n", "vm.swapusage"], { allowFail: true });
+  const used = /used = ([\d.]+)M/.exec(sw.stdout);
+  const mp = await run("memory_pressure", [], { allowFail: true });
+  const livre = /free percentage: (\d+)%/.exec(mp.stdout);
+  return { swapMiB: used ? Number(used[1]) : null, livrePct: livre ? Number(livre[1]) : null };
+}

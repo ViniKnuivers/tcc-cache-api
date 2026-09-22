@@ -32,7 +32,8 @@ import {
   type ResourceUsage,
 } from "./ambiente";
 import { lerResumoK6, runK6, type K6Resultado, type Workload } from "./k6";
-import { aguardarCondicoes, condicoes, vigiarSuspensao, type Condicoes } from "./energia";
+import { aguardarCondicoes, condicoes, memoriaHost, vigiarSuspensao, type Condicoes, type MemoriaHost } from "./energia";
+import { garantirAmbiente, SENTINELA } from "./sentinela";
 import { gitInfo, makeRunId, maquina, versoes, type GitInfo } from "./meta";
 import { RESULTS_DIR } from "./paths";
 
@@ -76,6 +77,8 @@ export interface Medicao {
   recursos: Record<string, ResourceUsage>;
   /** Energia e tampa no início da medição (macOS). */
   condicoes?: Condicoes;
+  /** Swap e memória livre do hospedeiro ao fim da medição (macOS). */
+  host?: MemoriaHost;
   sustentavel: boolean;
 }
 
@@ -158,6 +161,8 @@ export class Rodada {
   private readonly falhasFile: string;
   private readonly feitas = new Map<string, Medicao>();
   private ordem = 0;
+  /** Medições feitas neste processo (a sentinela roda a cada SENTINELA.intervalo). */
+  private medidasNestaExecucao = 0;
   private parando = false;
   private db: Db | null = null;
   private readonly seedData = generateSeedData();
@@ -253,6 +258,11 @@ export class Rodada {
     for (let i = 1; i <= MAX_REPETICOES_SUSPENSAO; i++) {
       if (this.interrompida) return null;
       await aguardarCondicoes();
+      if (this.medidasNestaExecucao % SENTINELA.intervalo === 0) {
+        this.db ??= createDb(config.databaseUrl, 2);
+        await garantirAmbiente(this.db, this.seedData, this.meta.runId, this.cfg.seed); // lança erro se não recuperar
+      }
+      this.medidasNestaExecucao++;
       const m = await this.medirUmaVez(etapa, ordem);
       if (m !== "suspensa") return m;
     }
@@ -327,6 +337,7 @@ export class Rodada {
         banco,
         recursos,
         condicoes: cond,
+        host: await memoriaHost(),
         sustentavel: sustentavel(k6, etapa.taxa, cfg.duracaoS),
       };
       appendFileSync(this.medicoesFile, `${JSON.stringify(m)}\n`);

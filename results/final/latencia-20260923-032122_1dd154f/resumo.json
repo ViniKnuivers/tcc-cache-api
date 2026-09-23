@@ -1,0 +1,920 @@
+{
+  "geradoEm": "2026-09-23T05:02:06.311Z",
+  "medicoes": 60,
+  "porGrupo": [
+    {
+      "estrategia": "http",
+      "carga": "escrita",
+      "taxa": 450,
+      "throughput": {
+        "media": 450,
+        "dp": 0.012,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 1.42,
+        "dp": 0.009,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.367,
+        "dp": 0.015,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 5.866,
+        "dp": 0.17,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 0.928,
+        "dp": 0.037,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 2.49,
+        "dp": 0.028,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.78,
+        "dp": 0.002,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 122314.8,
+        "dp": 8.927,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 45.432,
+        "dp": 0.469,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 148.484,
+        "dp": 2.229,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "taxa": 450,
+      "throughput": {
+        "media": 450.015,
+        "dp": 0.003,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 0.165,
+        "dp": 0.001,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 3.187,
+        "dp": 0.008,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 4.747,
+        "dp": 0.08,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.106,
+        "dp": 0.007,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 5.319,
+        "dp": 0.081,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.898,
+        "dp": 0,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 18753,
+        "dp": 6.164,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 16.004,
+        "dp": 0.243,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 124.188,
+        "dp": 0.867,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "taxa": 450,
+      "throughput": {
+        "media": 450.002,
+        "dp": 0.007,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 0.931,
+        "dp": 0.008,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.321,
+        "dp": 0.027,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 4.299,
+        "dp": 0.192,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 0.785,
+        "dp": 0.008,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 2.709,
+        "dp": 0.067,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.863,
+        "dp": 0,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 71864.4,
+        "dp": 3.715,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 32.272,
+        "dp": 0.326,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 131.574,
+        "dp": 1.042,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "escrita",
+      "taxa": 450,
+      "throughput": {
+        "media": 450.008,
+        "dp": 0.008,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 1.411,
+        "dp": 0.005,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 3.035,
+        "dp": 0.18,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 10.426,
+        "dp": 2.39,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.547,
+        "dp": 0.042,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 3.228,
+        "dp": 0.186,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.129,
+        "dp": 0.002,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 126305.8,
+        "dp": 10.109,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 47.57,
+        "dp": 0.812,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 148.94,
+        "dp": 1.781,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "taxa": 450,
+      "throughput": {
+        "media": 450.015,
+        "dp": 0.008,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 0.285,
+        "dp": 0.004,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.697,
+        "dp": 0.065,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 20.054,
+        "dp": 8.347,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.571,
+        "dp": 0.025,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 3.842,
+        "dp": 0.091,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.664,
+        "dp": 0,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 34604.2,
+        "dp": 30.777,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 25.336,
+        "dp": 0.606,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 183.13,
+        "dp": 1.584,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "mista",
+      "taxa": 450,
+      "throughput": {
+        "media": 450.005,
+        "dp": 0.009,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 1.399,
+        "dp": 0.005,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 3.89,
+        "dp": 0.769,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 47.076,
+        "dp": 10.709,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 2.125,
+        "dp": 0.438,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 5.06,
+        "dp": 0.856,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.393,
+        "dp": 0.001,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 87049,
+        "dp": 26.201,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 40.156,
+        "dp": 0.325,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 166.222,
+        "dp": 0.689,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "escrita",
+      "taxa": 450,
+      "throughput": {
+        "media": 449.988,
+        "dp": 0.016,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 1.401,
+        "dp": 0.006,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.438,
+        "dp": 0.034,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 6.107,
+        "dp": 0.114,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.422,
+        "dp": 0.062,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 2.559,
+        "dp": 0.063,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 126996,
+        "dp": 2.739,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 46.924,
+        "dp": 0.364,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 149.01,
+        "dp": 2.745,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "taxa": 450,
+      "throughput": {
+        "media": 449.244,
+        "dp": 1.708,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 0.733,
+        "dp": 0.003,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.295,
+        "dp": 0.021,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 3.367,
+        "dp": 0.114,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.369,
+        "dp": 0.027,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 3.161,
+        "dp": 0.048,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 67210.2,
+        "dp": 6.686,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 31.142,
+        "dp": 0.46,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 130.044,
+        "dp": 2.666,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "mista",
+      "taxa": 450,
+      "throughput": {
+        "media": 449.376,
+        "dp": 1.407,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 1.355,
+        "dp": 0.01,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.252,
+        "dp": 0.027,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 5.145,
+        "dp": 0.156,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.386,
+        "dp": 0.022,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 2.626,
+        "dp": 0.076,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 97582.8,
+        "dp": 2.168,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 41.326,
+        "dp": 0.321,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 134.078,
+        "dp": 3.617,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "escrita",
+      "taxa": 450,
+      "throughput": {
+        "media": 450.006,
+        "dp": 0.007,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 1.538,
+        "dp": 0.014,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.878,
+        "dp": 0.139,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 7.12,
+        "dp": 0.654,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.863,
+        "dp": 0.06,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 3.039,
+        "dp": 0.144,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.129,
+        "dp": 0.001,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 126302.4,
+        "dp": 3.362,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 50.822,
+        "dp": 0.411,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 150.942,
+        "dp": 1.684,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "taxa": 450,
+      "throughput": {
+        "media": 449.754,
+        "dp": 0.431,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 0.384,
+        "dp": 0.003,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.575,
+        "dp": 0.029,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 3.498,
+        "dp": 0.107,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.798,
+        "dp": 0.028,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 3.586,
+        "dp": 0.06,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.664,
+        "dp": 0.001,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 34597.8,
+        "dp": 37.252,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 27.456,
+        "dp": 0.195,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 130.358,
+        "dp": 1.507,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "mista",
+      "taxa": 450,
+      "throughput": {
+        "media": 450.005,
+        "dp": 0.005,
+        "n": 5
+      },
+      "lat_p50": {
+        "media": 1.518,
+        "dp": 0.012,
+        "n": 5
+      },
+      "lat_p95": {
+        "media": 2.493,
+        "dp": 0.037,
+        "n": 5
+      },
+      "lat_p99": {
+        "media": 5.471,
+        "dp": 0.285,
+        "n": 5
+      },
+      "leitura_p95": {
+        "media": 1.675,
+        "dp": 0.025,
+        "n": 5
+      },
+      "escrita_p95": {
+        "media": 2.893,
+        "dp": 0.106,
+        "n": 5
+      },
+      "taxa_acerto_cache": {
+        "media": 0.392,
+        "dp": 0.002,
+        "n": 5
+      },
+      "sql_total": {
+        "media": 87037.4,
+        "dp": 41.404,
+        "n": 5
+      },
+      "api_cpu_media": {
+        "media": 42.286,
+        "dp": 0.494,
+        "n": 5
+      },
+      "api_mem_media_mib": {
+        "media": 137.97,
+        "dp": 1.592,
+        "n": 5
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 5
+      }
+    }
+  ],
+  "capacidade": [
+    {
+      "estrategia": "none",
+      "carga": "mista",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "redis",
+      "carga": "mista",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "memory",
+      "carga": "mista",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "memory",
+      "carga": "escrita",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "http",
+      "carga": "escrita",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "redis",
+      "carga": "escrita",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    },
+    {
+      "estrategia": "none",
+      "carga": "escrita",
+      "capacidade": {
+        "media": 450,
+        "dp": 0,
+        "n": 5
+      },
+      "valores": [
+        450,
+        450,
+        450,
+        450,
+        450
+      ]
+    }
+  ]
+}

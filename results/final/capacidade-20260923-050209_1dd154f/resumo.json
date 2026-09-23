@@ -1,0 +1,3716 @@
+{
+  "geradoEm": "2026-09-23T08:21:20.503Z",
+  "medicoes": 209,
+  "porGrupo": [
+    {
+      "estrategia": "http",
+      "carga": "escrita",
+      "taxa": 1000,
+      "throughput": {
+        "media": 905.345,
+        "dp": 10.169,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 1090.62,
+        "dp": 12.768,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 1247.638,
+        "dp": 27.602,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 2127.734,
+        "dp": 31.377,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 2174.065,
+        "dp": 34.45,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 1227.336,
+        "dp": 24.401,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": 0.783,
+        "dp": 0.002,
+        "n": 6
+      },
+      "sql_total": {
+        "media": 125841.5,
+        "dp": 1102.227,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 98.325,
+        "dp": 1.851,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 179.302,
+        "dp": 0.753,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "escrita",
+      "taxa": 400,
+      "throughput": {
+        "media": 399.992,
+        "dp": 0.006,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.494,
+        "dp": 0.008,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.534,
+        "dp": 0.029,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 6.521,
+        "dp": 0.554,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.977,
+        "dp": 0.055,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 2.713,
+        "dp": 0.054,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.762,
+        "dp": 0.002,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 54673.333,
+        "dp": 6.658,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 44.697,
+        "dp": 1.372,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 141.983,
+        "dp": 1.096,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "escrita",
+      "taxa": 600,
+      "throughput": {
+        "media": 599.979,
+        "dp": 0.019,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.443,
+        "dp": 0.005,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 4.896,
+        "dp": 0.24,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 19.977,
+        "dp": 1.531,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.93,
+        "dp": 0.022,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 5.283,
+        "dp": 0.274,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.748,
+        "dp": 0.004,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 82047,
+        "dp": 14,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 59.993,
+        "dp": 0.698,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 162.55,
+        "dp": 3.78,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "escrita",
+      "taxa": 800,
+      "throughput": {
+        "media": 799.715,
+        "dp": 0.399,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.734,
+        "dp": 0.013,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 38.008,
+        "dp": 5.577,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 71.109,
+        "dp": 8.698,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.487,
+        "dp": 0.162,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 40.108,
+        "dp": 6.041,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.774,
+        "dp": 0.002,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 109132.333,
+        "dp": 3.786,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 79.017,
+        "dp": 1.221,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 172.093,
+        "dp": 2.359,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "taxa": 1000,
+      "throughput": {
+        "media": 999.957,
+        "dp": 0.038,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.118,
+        "dp": 0.001,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.436,
+        "dp": 0.039,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 3.688,
+        "dp": 0.095,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.808,
+        "dp": 0.001,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 4.382,
+        "dp": 0.087,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.942,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 18457.667,
+        "dp": 9.292,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 22.727,
+        "dp": 0.316,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 129.077,
+        "dp": 1.839,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "taxa": 1200,
+      "throughput": {
+        "media": 1199.94,
+        "dp": 0.059,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.117,
+        "dp": 0.001,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.406,
+        "dp": 0.009,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 3.635,
+        "dp": 0.07,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.8,
+        "dp": 0.007,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 4.307,
+        "dp": 0.241,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.949,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 21715.667,
+        "dp": 16.258,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 24.977,
+        "dp": 0.631,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 130.313,
+        "dp": 1.263,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "taxa": 1600,
+      "throughput": {
+        "media": 1599.856,
+        "dp": 0.047,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.117,
+        "dp": 0,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.425,
+        "dp": 0.012,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 3.795,
+        "dp": 0.068,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.856,
+        "dp": 0.012,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 4.618,
+        "dp": 0.103,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.958,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 28179,
+        "dp": 15.716,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 30.413,
+        "dp": 0.093,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 131.87,
+        "dp": 2.07,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "taxa": 2000,
+      "throughput": {
+        "media": 1999.933,
+        "dp": 0.04,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.114,
+        "dp": 0.001,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.465,
+        "dp": 0.037,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 4.165,
+        "dp": 0.213,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.92,
+        "dp": 0.037,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 5.472,
+        "dp": 0.167,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.964,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 34659,
+        "dp": 24.021,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 34.977,
+        "dp": 0.496,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 134.863,
+        "dp": 0.448,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "taxa": 400,
+      "throughput": {
+        "media": 400.006,
+        "dp": 0.006,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.202,
+        "dp": 0.006,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 3.395,
+        "dp": 0.104,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 4.783,
+        "dp": 0.153,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.225,
+        "dp": 0.044,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 5.324,
+        "dp": 0.232,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.902,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 8161.333,
+        "dp": 3.055,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 14.443,
+        "dp": 0.417,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 119.417,
+        "dp": 0.536,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "taxa": 600,
+      "throughput": {
+        "media": 599.989,
+        "dp": 0.024,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.132,
+        "dp": 0.001,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.423,
+        "dp": 0.042,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 3.366,
+        "dp": 0.087,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.892,
+        "dp": 0.013,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.738,
+        "dp": 0.069,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.92,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 11735,
+        "dp": 6.928,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 14.953,
+        "dp": 0.313,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 120.12,
+        "dp": 0.737,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "taxa": 800,
+      "throughput": {
+        "media": 799.978,
+        "dp": 0.011,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.12,
+        "dp": 0.001,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.472,
+        "dp": 0.018,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 3.719,
+        "dp": 0.066,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.818,
+        "dp": 0.009,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 4.294,
+        "dp": 0.113,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.932,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 15228.333,
+        "dp": 6.028,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 19.597,
+        "dp": 0.064,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 127.233,
+        "dp": 2.066,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "taxa": 1000,
+      "throughput": {
+        "media": 999.932,
+        "dp": 0.032,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.241,
+        "dp": 0.021,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 4.555,
+        "dp": 0.449,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 21.089,
+        "dp": 3.919,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.793,
+        "dp": 0.007,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 9.761,
+        "dp": 1.577,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.912,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 79085.667,
+        "dp": 12.662,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 61.723,
+        "dp": 0.913,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 165.143,
+        "dp": 0.585,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "taxa": 1200,
+      "throughput": {
+        "media": 1199.94,
+        "dp": 0.019,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.307,
+        "dp": 0.009,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 12.705,
+        "dp": 2.183,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 39.898,
+        "dp": 5.436,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.968,
+        "dp": 0.037,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 23.671,
+        "dp": 2.673,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.914,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 94303.333,
+        "dp": 32.005,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 72.653,
+        "dp": 0.665,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 169.62,
+        "dp": 1.763,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "taxa": 1600,
+      "throughput": {
+        "media": 1526.332,
+        "dp": 39.966,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 374.277,
+        "dp": 286.584,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 1030.667,
+        "dp": 348.253,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 1737.584,
+        "dp": 612.177,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 1593.384,
+        "dp": 675.369,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 1005.121,
+        "dp": 326.316,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": 0.911,
+        "dp": 0,
+        "n": 6
+      },
+      "sql_total": {
+        "media": 121750.667,
+        "dp": 2305.924,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 98.218,
+        "dp": 1.174,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 179.6,
+        "dp": 2.049,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "taxa": 400,
+      "throughput": {
+        "media": 399.995,
+        "dp": 0.013,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.107,
+        "dp": 0.006,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.416,
+        "dp": 0.016,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 4.899,
+        "dp": 0.056,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.807,
+        "dp": 0.006,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 2.899,
+        "dp": 0.003,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.877,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 32203.667,
+        "dp": 9.292,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 31.293,
+        "dp": 0.82,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 130.11,
+        "dp": 1.801,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "taxa": 600,
+      "throughput": {
+        "media": 599.983,
+        "dp": 0.026,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.975,
+        "dp": 0.025,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.5,
+        "dp": 0.063,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 5.994,
+        "dp": 0.19,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.741,
+        "dp": 0.007,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.403,
+        "dp": 0.081,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.896,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 47917.667,
+        "dp": 17.039,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 42.093,
+        "dp": 1.395,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 145.87,
+        "dp": 2.9,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "taxa": 800,
+      "throughput": {
+        "media": 799.969,
+        "dp": 0.032,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.075,
+        "dp": 0.036,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.8,
+        "dp": 0.026,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 8.177,
+        "dp": 0.784,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 0.759,
+        "dp": 0.018,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 4.135,
+        "dp": 0.057,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.897,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 63524.667,
+        "dp": 26.102,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 50.567,
+        "dp": 0.914,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 163.607,
+        "dp": 2.797,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "escrita",
+      "taxa": 400,
+      "throughput": {
+        "media": 400.001,
+        "dp": 0.015,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.489,
+        "dp": 0.009,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.573,
+        "dp": 0.086,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 6.614,
+        "dp": 0.481,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.488,
+        "dp": 0.038,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 2.709,
+        "dp": 0.101,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.154,
+        "dp": 0.004,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 56343.667,
+        "dp": 9.074,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 46.797,
+        "dp": 1.333,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 144.597,
+        "dp": 0.516,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "escrita",
+      "taxa": 600,
+      "throughput": {
+        "media": 598.489,
+        "dp": 2.29,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.477,
+        "dp": 0.014,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 16.887,
+        "dp": 3.513,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 41.666,
+        "dp": 2.615,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 14.174,
+        "dp": 7.119,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 17.051,
+        "dp": 3.296,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.125,
+        "dp": 0.002,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 84612,
+        "dp": 9.644,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 63.253,
+        "dp": 0.968,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 164.243,
+        "dp": 3.641,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "escrita",
+      "taxa": 800,
+      "throughput": {
+        "media": 795.883,
+        "dp": 5.31,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 2.114,
+        "dp": 0.168,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 258.551,
+        "dp": 59.863,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 362.453,
+        "dp": 84.174,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 502.228,
+        "dp": 116.022,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 252.208,
+        "dp": 58.417,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": 0.129,
+        "dp": 0.003,
+        "n": 6
+      },
+      "sql_total": {
+        "media": 112725.167,
+        "dp": 11.25,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 83.78,
+        "dp": 2.063,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 173.705,
+        "dp": 1.541,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "taxa": 1000,
+      "throughput": {
+        "media": 977.134,
+        "dp": 9.292,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.315,
+        "dp": 0.003,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 7.895,
+        "dp": 0.533,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 499.948,
+        "dp": 0.326,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 6.484,
+        "dp": 0.692,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 18.277,
+        "dp": 0.312,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.691,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 37090,
+        "dp": 42.332,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 42.95,
+        "dp": 0.141,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 194.553,
+        "dp": 2.09,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "taxa": 1200,
+      "throughput": {
+        "media": 1183.997,
+        "dp": 2.035,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.423,
+        "dp": 0.026,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 46.413,
+        "dp": 8.167,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 500.643,
+        "dp": 0.129,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 45.605,
+        "dp": 8.676,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 51.017,
+        "dp": 7.306,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.694,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 44397.333,
+        "dp": 74.769,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 49.967,
+        "dp": 0.76,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 203.84,
+        "dp": 1.234,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "taxa": 1600,
+      "throughput": {
+        "media": 1555.125,
+        "dp": 12.588,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 0.893,
+        "dp": 0.031,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 444.903,
+        "dp": 134.214,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 502.067,
+        "dp": 0.298,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 499.918,
+        "dp": 0.106,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 106.905,
+        "dp": 6.606,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": 0.695,
+        "dp": 0.001,
+        "n": 6
+      },
+      "sql_total": {
+        "media": 59015,
+        "dp": 151.687,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 67.92,
+        "dp": 1.577,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 216.58,
+        "dp": 1.024,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "taxa": 400,
+      "throughput": {
+        "media": 400.018,
+        "dp": 0.01,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.321,
+        "dp": 0.005,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.501,
+        "dp": 0.021,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 4.003,
+        "dp": 0.228,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.746,
+        "dp": 0.016,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.742,
+        "dp": 0.174,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.663,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 15342,
+        "dp": 14.731,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 25.22,
+        "dp": 0.24,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 142.377,
+        "dp": 0.505,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "taxa": 600,
+      "throughput": {
+        "media": 599.988,
+        "dp": 0.012,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.258,
+        "dp": 0.003,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.26,
+        "dp": 0.023,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 23.842,
+        "dp": 4.953,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.481,
+        "dp": 0.011,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.466,
+        "dp": 0.051,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.674,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 22777,
+        "dp": 13.528,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 29.09,
+        "dp": 0.2,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 163.573,
+        "dp": 0.469,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "taxa": 800,
+      "throughput": {
+        "media": 787.522,
+        "dp": 12.543,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.266,
+        "dp": 0.004,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.687,
+        "dp": 0.122,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 55.552,
+        "dp": 5.032,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.862,
+        "dp": 0.194,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 5.043,
+        "dp": 0.619,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.684,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 30055.667,
+        "dp": 52.386,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 36.777,
+        "dp": 1.163,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 181.243,
+        "dp": 1.986,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "mista",
+      "taxa": 1000,
+      "throughput": {
+        "media": 976.569,
+        "dp": 7.035,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 2.782,
+        "dp": 0.245,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 164.381,
+        "dp": 20.178,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 1002.733,
+        "dp": 2.733,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 508.852,
+        "dp": 13.154,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 108.051,
+        "dp": 8.198,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": 0.409,
+        "dp": 0.002,
+        "n": 6
+      },
+      "sql_total": {
+        "media": 96980.667,
+        "dp": 71.743,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 85.323,
+        "dp": 1.723,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 176.823,
+        "dp": 1.492,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "mista",
+      "taxa": 400,
+      "throughput": {
+        "media": 397.801,
+        "dp": 3.827,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.459,
+        "dp": 0.003,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.552,
+        "dp": 0.069,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 11.301,
+        "dp": 4.764,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.51,
+        "dp": 0.021,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.455,
+        "dp": 0.162,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.403,
+        "dp": 0.002,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 38971.333,
+        "dp": 21.079,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 38.23,
+        "dp": 0.036,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 146.007,
+        "dp": 3.045,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "mista",
+      "taxa": 600,
+      "throughput": {
+        "media": 597.407,
+        "dp": 2.473,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.392,
+        "dp": 0.012,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 14.048,
+        "dp": 2.018,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 60.687,
+        "dp": 5.302,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 9.183,
+        "dp": 1.401,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 17.687,
+        "dp": 2.701,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.384,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 58817,
+        "dp": 9.165,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 52.49,
+        "dp": 0.835,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 154.85,
+        "dp": 1.731,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "memory",
+      "carga": "mista",
+      "taxa": 800,
+      "throughput": {
+        "media": 791.682,
+        "dp": 7.189,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.502,
+        "dp": 0.029,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 61.158,
+        "dp": 11.614,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 258.674,
+        "dp": 209.796,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 67.737,
+        "dp": 15.943,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 58.238,
+        "dp": 11.037,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.391,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 77960,
+        "dp": 32.512,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 67.527,
+        "dp": 1.777,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 166.197,
+        "dp": 0.38,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "escrita",
+      "taxa": 400,
+      "throughput": {
+        "media": 399.997,
+        "dp": 0.011,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.486,
+        "dp": 0.013,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.573,
+        "dp": 0.071,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 6.425,
+        "dp": 0.472,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.564,
+        "dp": 0.115,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 2.686,
+        "dp": 0.121,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 56711,
+        "dp": 1.732,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 46.037,
+        "dp": 1.136,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 142.473,
+        "dp": 2.196,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "escrita",
+      "taxa": 600,
+      "throughput": {
+        "media": 599.982,
+        "dp": 0.024,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.447,
+        "dp": 0.008,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 6.638,
+        "dp": 1.666,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 27.279,
+        "dp": 11.04,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 4.094,
+        "dp": 1.261,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 6.937,
+        "dp": 1.714,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 85059.333,
+        "dp": 0.577,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 63.11,
+        "dp": 0.686,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 163.433,
+        "dp": 1.952,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "escrita",
+      "taxa": 800,
+      "throughput": {
+        "media": 798.767,
+        "dp": 2.949,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 1.982,
+        "dp": 0.11,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 265.575,
+        "dp": 54.918,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 410.532,
+        "dp": 99.714,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 529.662,
+        "dp": 114.855,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 257.402,
+        "dp": 53.84,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 113355.833,
+        "dp": 6.795,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 82.452,
+        "dp": 1.506,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 172.498,
+        "dp": 3.309,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "taxa": 1000,
+      "throughput": {
+        "media": 982.978,
+        "dp": 21.566,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.777,
+        "dp": 0.012,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 3.623,
+        "dp": 0.438,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 28.431,
+        "dp": 6.185,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 3.165,
+        "dp": 0.433,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 5.897,
+        "dp": 0.678,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 74764,
+        "dp": 9,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 57.283,
+        "dp": 1.657,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 135.433,
+        "dp": 1.321,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "taxa": 1200,
+      "throughput": {
+        "media": 1164.739,
+        "dp": 16.664,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.846,
+        "dp": 0.023,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 16.335,
+        "dp": 6.175,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 500.811,
+        "dp": 0.315,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 16.394,
+        "dp": 6.487,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 15.928,
+        "dp": 4.661,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 89738.333,
+        "dp": 2.082,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 68.44,
+        "dp": 0.858,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 139,
+        "dp": 0.981,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "taxa": 1600,
+      "throughput": {
+        "media": 1317.796,
+        "dp": 33.846,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 42.253,
+        "dp": 11.096,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 4518.213,
+        "dp": 775.095,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 5070.405,
+        "dp": 8.871,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 4687.609,
+        "dp": 521.591,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 81.139,
+        "dp": 3.3,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 110133.5,
+        "dp": 2422.581,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 97.603,
+        "dp": 1.703,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 145.002,
+        "dp": 3.227,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "taxa": 400,
+      "throughput": {
+        "media": 400,
+        "dp": 0.01,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.789,
+        "dp": 0.001,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.247,
+        "dp": 0.016,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 3.407,
+        "dp": 0.171,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.487,
+        "dp": 0.03,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.211,
+        "dp": 0.076,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 29849,
+        "dp": 4.359,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 29.61,
+        "dp": 0.829,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 122.403,
+        "dp": 1.98,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "taxa": 600,
+      "throughput": {
+        "media": 594.13,
+        "dp": 10.118,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.684,
+        "dp": 0.002,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.077,
+        "dp": 0.017,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 4.094,
+        "dp": 0.337,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.361,
+        "dp": 0.02,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 2.807,
+        "dp": 0.076,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 44830.667,
+        "dp": 10.066,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 37.193,
+        "dp": 0.985,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 130.737,
+        "dp": 2.561,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "taxa": 800,
+      "throughput": {
+        "media": 796.114,
+        "dp": 6.689,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.684,
+        "dp": 0.007,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.43,
+        "dp": 0.054,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 9.701,
+        "dp": 0.382,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.739,
+        "dp": 0.068,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 4.002,
+        "dp": 0.316,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 59832.667,
+        "dp": 12.055,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 46.517,
+        "dp": 0.423,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 133.817,
+        "dp": 0.714,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "mista",
+      "taxa": 1000,
+      "throughput": {
+        "media": 972.714,
+        "dp": 13.762,
+        "n": 4
+      },
+      "lat_p50": {
+        "media": 10.97,
+        "dp": 18.134,
+        "n": 4
+      },
+      "lat_p95": {
+        "media": 419.662,
+        "dp": 720.837,
+        "n": 4
+      },
+      "lat_p99": {
+        "media": 1655.511,
+        "dp": 2308.318,
+        "n": 4
+      },
+      "leitura_p95": {
+        "media": 1189.525,
+        "dp": 2207.914,
+        "n": 4
+      },
+      "escrita_p95": {
+        "media": 86.007,
+        "dp": 77.408,
+        "n": 4
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 109115,
+        "dp": 38.184,
+        "n": 4
+      },
+      "api_cpu_media": {
+        "media": 85.492,
+        "dp": 4.999,
+        "n": 4
+      },
+      "api_mem_media_mib": {
+        "media": 157.65,
+        "dp": 2.536,
+        "n": 4
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 4
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "mista",
+      "taxa": 1200,
+      "throughput": {
+        "media": 972.47,
+        "dp": 14.515,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 239.209,
+        "dp": 11.248,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 5276.202,
+        "dp": 12.065,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 5335.388,
+        "dp": 15.724,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 5303.862,
+        "dp": 12.798,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 307.797,
+        "dp": 19.397,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 114002.833,
+        "dp": 1613.56,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 98.852,
+        "dp": 1.335,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 155.488,
+        "dp": 1.508,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "mista",
+      "taxa": 400,
+      "throughput": {
+        "media": 400.004,
+        "dp": 0.005,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.433,
+        "dp": 0.001,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.305,
+        "dp": 0.014,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 5.077,
+        "dp": 0.218,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.422,
+        "dp": 0.029,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 2.694,
+        "dp": 0.028,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 43740.667,
+        "dp": 2.082,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 39.427,
+        "dp": 0.276,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 131.23,
+        "dp": 2.628,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "mista",
+      "taxa": 600,
+      "throughput": {
+        "media": 599.985,
+        "dp": 0.026,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.341,
+        "dp": 0.008,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.885,
+        "dp": 0.326,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 10.161,
+        "dp": 1.591,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.739,
+        "dp": 0.161,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.844,
+        "dp": 0.407,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 65620.667,
+        "dp": 7.024,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 52.177,
+        "dp": 0.521,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 145.687,
+        "dp": 1.845,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "none",
+      "carga": "mista",
+      "taxa": 800,
+      "throughput": {
+        "media": 794.606,
+        "dp": 4.737,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.412,
+        "dp": 0.004,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 10.79,
+        "dp": 2.723,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 35.562,
+        "dp": 8.008,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 9.835,
+        "dp": 3.181,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 11.414,
+        "dp": 2.338,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": null,
+        "dp": 0,
+        "n": 0
+      },
+      "sql_total": {
+        "media": 87243,
+        "dp": 8.544,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 66.49,
+        "dp": 1.058,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 155.417,
+        "dp": 0.802,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "escrita",
+      "taxa": 400,
+      "throughput": {
+        "media": 399.994,
+        "dp": 0.014,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.597,
+        "dp": 0.004,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 3.029,
+        "dp": 0.07,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 8.96,
+        "dp": 2.423,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.887,
+        "dp": 0.022,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.207,
+        "dp": 0.104,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.15,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 56350,
+        "dp": 2,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 48.09,
+        "dp": 1.074,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 146.017,
+        "dp": 1.374,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "escrita",
+      "taxa": 600,
+      "throughput": {
+        "media": 599.934,
+        "dp": 0.039,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.628,
+        "dp": 0.011,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 9.948,
+        "dp": 2.403,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 31.068,
+        "dp": 6.185,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 7.042,
+        "dp": 1.544,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 10.107,
+        "dp": 2.35,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.121,
+        "dp": 0.002,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 84591.667,
+        "dp": 14.364,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 68.093,
+        "dp": 0.575,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 165.357,
+        "dp": 1.443,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "escrita",
+      "taxa": 800,
+      "throughput": {
+        "media": 793.714,
+        "dp": 7.861,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 44.374,
+        "dp": 99.781,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 490.122,
+        "dp": 327.53,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 1021.483,
+        "dp": 1242.5,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 1579.303,
+        "dp": 2071.669,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 472.975,
+        "dp": 311.798,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": 0.137,
+        "dp": 0.013,
+        "n": 6
+      },
+      "sql_total": {
+        "media": 112294.667,
+        "dp": 482.598,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 88.87,
+        "dp": 2.355,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 171.835,
+        "dp": 1.624,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "taxa": 1000,
+      "throughput": {
+        "media": 987.964,
+        "dp": 5.833,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.418,
+        "dp": 0.009,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.697,
+        "dp": 0.037,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 11.338,
+        "dp": 1.846,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 2.093,
+        "dp": 0.013,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 4.405,
+        "dp": 0.305,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.691,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 37006.333,
+        "dp": 47.078,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 46.733,
+        "dp": 1.561,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 136.147,
+        "dp": 1.913,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "taxa": 1200,
+      "throughput": {
+        "media": 1176.744,
+        "dp": 6.821,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.504,
+        "dp": 0.018,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 3.324,
+        "dp": 0.262,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 29.125,
+        "dp": 15.035,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 2.688,
+        "dp": 0.239,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 6.564,
+        "dp": 0.141,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.694,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 44168.333,
+        "dp": 36.828,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 54.25,
+        "dp": 0.51,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 136.227,
+        "dp": 3.327,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "taxa": 1600,
+      "throughput": {
+        "media": 1515.439,
+        "dp": 47.693,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.796,
+        "dp": 0.031,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 16.695,
+        "dp": 4.53,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 502.072,
+        "dp": 0.789,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 16.048,
+        "dp": 5.172,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 19.188,
+        "dp": 2.891,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.7,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 58047.333,
+        "dp": 43.501,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 68.24,
+        "dp": 0.817,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 141.12,
+        "dp": 4.27,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "taxa": 2000,
+      "throughput": {
+        "media": 1910.486,
+        "dp": 63.581,
+        "n": 4
+      },
+      "lat_p50": {
+        "media": 1.391,
+        "dp": 0.108,
+        "n": 4
+      },
+      "lat_p95": {
+        "media": 182.191,
+        "dp": 212.094,
+        "n": 4
+      },
+      "lat_p99": {
+        "media": 637.907,
+        "dp": 241.944,
+        "n": 4
+      },
+      "leitura_p95": {
+        "media": 499.935,
+        "dp": 0.217,
+        "n": 4
+      },
+      "escrita_p95": {
+        "media": 45.592,
+        "dp": 1.931,
+        "n": 4
+      },
+      "taxa_acerto_cache": {
+        "media": 0.699,
+        "dp": 0,
+        "n": 4
+      },
+      "sql_total": {
+        "media": 72001.75,
+        "dp": 128.027,
+        "n": 4
+      },
+      "api_cpu_media": {
+        "media": 83.925,
+        "dp": 0.77,
+        "n": 4
+      },
+      "api_mem_media_mib": {
+        "media": 142.828,
+        "dp": 1.505,
+        "n": 4
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 4
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "taxa": 400,
+      "throughput": {
+        "media": 399.74,
+        "dp": 0.496,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.42,
+        "dp": 0.007,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.502,
+        "dp": 0.017,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 3.374,
+        "dp": 0.068,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.974,
+        "dp": 0.018,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.439,
+        "dp": 0.073,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.663,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 15345.667,
+        "dp": 22.053,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 26.237,
+        "dp": 0.602,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 120.597,
+        "dp": 0.211,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "taxa": 600,
+      "throughput": {
+        "media": 596.781,
+        "dp": 5.599,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.371,
+        "dp": 0.004,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.255,
+        "dp": 0.021,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 3.716,
+        "dp": 0.156,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.736,
+        "dp": 0.026,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.293,
+        "dp": 0.214,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.674,
+        "dp": 0,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 22747,
+        "dp": 14.933,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 32.603,
+        "dp": 0.159,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 127.46,
+        "dp": 1.14,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "taxa": 800,
+      "throughput": {
+        "media": 798.463,
+        "dp": 2.649,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 0.386,
+        "dp": 0.007,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.512,
+        "dp": 0.079,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 5.574,
+        "dp": 1.088,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.834,
+        "dp": 0.058,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.826,
+        "dp": 0.277,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.684,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 29935.667,
+        "dp": 22.053,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 40.37,
+        "dp": 0.433,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 133.2,
+        "dp": 1.342,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "mista",
+      "taxa": 1000,
+      "throughput": {
+        "media": 990.995,
+        "dp": 2.955,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 2.122,
+        "dp": 0.04,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 51.422,
+        "dp": 1.252,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 500.836,
+        "dp": 0.109,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 61.02,
+        "dp": 2.076,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 46.913,
+        "dp": 1.281,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.396,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 96226,
+        "dp": 54.617,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 83.36,
+        "dp": 0.806,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 158.123,
+        "dp": 0.5,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "mista",
+      "taxa": 1200,
+      "throughput": {
+        "media": 1039.122,
+        "dp": 21.213,
+        "n": 6
+      },
+      "lat_p50": {
+        "media": 248.491,
+        "dp": 10.022,
+        "n": 6
+      },
+      "lat_p95": {
+        "media": 5363.011,
+        "dp": 18.382,
+        "n": 6
+      },
+      "lat_p99": {
+        "media": 5489.254,
+        "dp": 13.241,
+        "n": 6
+      },
+      "leitura_p95": {
+        "media": 5435.58,
+        "dp": 14.702,
+        "n": 6
+      },
+      "escrita_p95": {
+        "media": 297.659,
+        "dp": 10.105,
+        "n": 6
+      },
+      "taxa_acerto_cache": {
+        "media": 0.437,
+        "dp": 0.002,
+        "n": 6
+      },
+      "sql_total": {
+        "media": 102974.333,
+        "dp": 1042.776,
+        "n": 6
+      },
+      "api_cpu_media": {
+        "media": 98.195,
+        "dp": 1.13,
+        "n": 6
+      },
+      "api_mem_media_mib": {
+        "media": 158.44,
+        "dp": 1.336,
+        "n": 6
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 6
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "mista",
+      "taxa": 400,
+      "throughput": {
+        "media": 400.011,
+        "dp": 0.02,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.593,
+        "dp": 0.008,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 2.563,
+        "dp": 0.041,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 5.776,
+        "dp": 0.808,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 1.741,
+        "dp": 0.036,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 3.097,
+        "dp": 0.134,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.401,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 38992,
+        "dp": 7.55,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 40.94,
+        "dp": 0.797,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 134.473,
+        "dp": 0.649,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "mista",
+      "taxa": 600,
+      "throughput": {
+        "media": 599.981,
+        "dp": 0.025,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.522,
+        "dp": 0.011,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 3.277,
+        "dp": 0.218,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 11.061,
+        "dp": 2.245,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 2.168,
+        "dp": 0.19,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 4.376,
+        "dp": 0.316,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.382,
+        "dp": 0.002,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 58809,
+        "dp": 43.589,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 53.747,
+        "dp": 0.426,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 147.557,
+        "dp": 1.224,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    },
+    {
+      "estrategia": "redis",
+      "carga": "mista",
+      "taxa": 800,
+      "throughput": {
+        "media": 791.958,
+        "dp": 13.578,
+        "n": 3
+      },
+      "lat_p50": {
+        "media": 1.659,
+        "dp": 0.008,
+        "n": 3
+      },
+      "lat_p95": {
+        "media": 18.288,
+        "dp": 3.13,
+        "n": 3
+      },
+      "lat_p99": {
+        "media": 49.489,
+        "dp": 6.788,
+        "n": 3
+      },
+      "leitura_p95": {
+        "media": 14.533,
+        "dp": 2.874,
+        "n": 3
+      },
+      "escrita_p95": {
+        "media": 20.334,
+        "dp": 3.101,
+        "n": 3
+      },
+      "taxa_acerto_cache": {
+        "media": 0.389,
+        "dp": 0.001,
+        "n": 3
+      },
+      "sql_total": {
+        "media": 77578,
+        "dp": 62.426,
+        "n": 3
+      },
+      "api_cpu_media": {
+        "media": 68.443,
+        "dp": 0.322,
+        "n": 3
+      },
+      "api_mem_media_mib": {
+        "media": 151.737,
+        "dp": 0.552,
+        "n": 3
+      },
+      "taxa_erros": {
+        "media": 0,
+        "dp": 0,
+        "n": 3
+      }
+    }
+  ],
+  "capacidade": [
+    {
+      "estrategia": "none",
+      "carga": "mista",
+      "capacidade": {
+        "media": 1000,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        1000,
+        1000,
+        1000
+      ]
+    },
+    {
+      "estrategia": "redis",
+      "carga": "mista",
+      "capacidade": {
+        "media": 1000,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        1000,
+        1000,
+        1000
+      ]
+    },
+    {
+      "estrategia": "none",
+      "carga": "leitura",
+      "capacidade": {
+        "media": 1200,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        1200,
+        1200,
+        1200
+      ]
+    },
+    {
+      "estrategia": "memory",
+      "carga": "mista",
+      "capacidade": {
+        "media": 800,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        800,
+        800,
+        800
+      ]
+    },
+    {
+      "estrategia": "memory",
+      "carga": "escrita",
+      "capacidade": {
+        "media": 600,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        600,
+        600,
+        600
+      ]
+    },
+    {
+      "estrategia": "http",
+      "carga": "mista",
+      "capacidade": {
+        "media": 1200,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        1200,
+        1200,
+        1200
+      ]
+    },
+    {
+      "estrategia": "http",
+      "carga": "leitura",
+      "capacidade": {
+        "media": 2000,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        2000,
+        2000,
+        2000
+      ]
+    },
+    {
+      "estrategia": "memory",
+      "carga": "leitura",
+      "capacidade": {
+        "media": 1200,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        1200,
+        1200,
+        1200
+      ]
+    },
+    {
+      "estrategia": "http",
+      "carga": "escrita",
+      "capacidade": {
+        "media": 800,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        800,
+        800,
+        800
+      ]
+    },
+    {
+      "estrategia": "redis",
+      "carga": "leitura",
+      "capacidade": {
+        "media": 2000,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        2000,
+        2000,
+        2000
+      ]
+    },
+    {
+      "estrategia": "redis",
+      "carga": "escrita",
+      "capacidade": {
+        "media": 600,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        600,
+        600,
+        600
+      ]
+    },
+    {
+      "estrategia": "none",
+      "carga": "escrita",
+      "capacidade": {
+        "media": 600,
+        "dp": 0,
+        "n": 3
+      },
+      "valores": [
+        600,
+        600,
+        600
+      ]
+    }
+  ]
+}

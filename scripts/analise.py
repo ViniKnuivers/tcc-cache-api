@@ -212,7 +212,7 @@ def fig_capacidade(caps, figs, maior_degrau, reps):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _p: br(v, 0)))
     ax.set_title("Capacidade: maior throughput sustentável", loc="left")
     ax.legend(loc="upper right", fontsize=8)
-    nota(fig, f"Sustentável: p95 < 100 ms, < 1% descartadas e < 1% de erros. Degraus até {br(maior_degrau, 0)} req/s. Barras: mediana de {reps_txt(reps)}; traços: mínimo e máximo.", y=-0.06)
+    nota(fig, f"Sustentável: p95 < 100 ms, < 1% descartadas e < 1% de erros. Degraus até {br(maior_degrau, 0)} req/s; “≥” marca quem sustentou o maior degrau. Barras: mediana de {reps_txt(reps)}; traços: mínimo e máximo.", y=-0.06)
     return salvar(fig, figs, "03_capacidade.png")
 
 
@@ -251,7 +251,7 @@ def fig_recursos(lat, figs):
         estilo(ax, unidade)
         ax.set_title(titulo, loc="left")
     legenda(fig, axes)
-    nota(fig, "Amostras do docker stats (~1/s) durante a medição. A API tem limite de 1 CPU e 512 MiB. Mediana (mín.–máx.) das repetições.", y=-0.11)
+    nota(fig, "Amostras do docker stats (~1/s) durante a medição. A API tem limite de 1 CPU e 512 MiB; o k6, 2 CPUs. Mediana (mín.–máx.) das repetições.", y=-0.11)
     return salvar(fig, figs, "06_recursos_api.png")
 
 
@@ -391,7 +391,7 @@ def main():
     md.append(tabela_md(["Item", "Valor"], [
         ["Máquina", f"{maq.get('cpu', '?')}, {maq.get('nucleos', '?')} núcleos, {br(maq.get('memoriaGiB', float('nan')), 0)} GiB ({maq.get('plataforma', '?')})"],
         ["Docker", f"{maq.get('docker', {}).get('versao', '?')} — VM com {maq.get('docker', {}).get('cpusVm', '?')} CPUs e {br(maq.get('docker', {}).get('memoriaVmGiB', float('nan')), 1)} GiB"],
-        ["Recursos", "API 1 CPU / 512 MiB · PostgreSQL 2 CPUs / 1 GiB · Redis 1 CPU / 256 MiB · nginx 1 CPU / 256 MiB · k6 2 CPUs / 512 MiB"],
+        ["Recursos", "API 1 CPU / 512 MiB · PostgreSQL 2 CPUs / 1 GiB · Redis 1 CPU / 256 MiB · nginx 1 CPU / 256 MiB · k6 2 CPUs / 1 GiB"],
         ["Taxa (experimento de latência)", f"{br(taxa, 0)} req/s (taxa de chegada constante)"],
         ["Aquecimento / medição", f"{cfg['aquecimentoS']} s / {cfg['duracaoS']} s"],
         ["Repetições", f"{cfg['repeticoes']} por combinação (ordem sorteada em cada repetição)"],
@@ -501,9 +501,10 @@ def main():
     rhos = []
     for c in CARGAS:
         pts = [(r["ordem"], r["lat_p95"]) for r in lat if r["estrategia"] == "none" and r["carga"] == c]
-        rhos.append([ROTULO_C[c], br(spearman([p[0] for p in pts], [p[1] for p in pts]), 2), str(len(pts))])
-    md.append(tabela_md(["Carga", "ρ de Spearman (ordem × p95 sem cache)", "n"], rhos) + "\n")
-    md.append("Valores de ρ próximos de 0 indicam que o desempenho da máquina não variou sistematicamente ao longo do experimento. A ordem sorteada das combinações protege a comparação entre estratégias mesmo que haja alguma deriva.\n")
+        v = [p[1] for p in pts]
+        rhos.append([ROTULO_C[c], br(spearman([p[0] for p in pts], v), 2), f"{br(min(v), 2)} – {br(max(v), 2)}", f"{br(max(v) - min(v), 2)} ms", str(len(pts))])
+    md.append(tabela_md(["Carga", "ρ de Spearman (ordem × p95 sem cache)", "p95 observado (ms)", "Amplitude", "n"], rhos) + "\n")
+    md.append(f"Com {reps_txt(n_rep)}, o ρ só detecta tendência grosseira (com ρ = 1, o p bilateral seria 0,017) e precisa ser lido junto da amplitude: uma tendência monótona em variações de centésimos de milissegundo não tem efeito prático sobre a comparação entre estratégias. A ordem sorteada das combinações protege a comparação mesmo que haja alguma deriva.\n")
 
     md.append("## Arquivos\n")
     md.append("\n".join(f"- `{os.path.relpath(p, ROOT)}`" for p in saidas + sorted(glob.glob(os.path.join(tabelas, '*.csv')))) + "\n")

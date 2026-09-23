@@ -106,7 +106,65 @@ Responda ao problema de pesquisa carga por carga (seção 5 deste guia), depois:
 
 ## 5. Principais achados
 
-<!-- PREENCHER COM OS NÚMEROS DO RESULTADOS.md APÓS OS EXPERIMENTOS -->
+Todos os números estão em [`RESULTADOS.md`](RESULTADOS.md). Esta seção é o resumo interpretado, pronto para virar a discussão.
+
+### A resposta curta ao problema de pesquisa
+
+Nenhuma estratégia vence em tudo. O que muda com a carga é **quanto** cada uma rende e **o que** ela cobra em troca:
+
+| Carga | Quem rende mais | Por quê |
+|---|---|---|
+| Leitura (90/10) | HTTP e Redis | capacidade sobe de 1.200 para ≥ 2.000 req/s (≥ 1,67×); o HTTP ainda corta 72% dos comandos SQL e quase metade da CPU da API |
+| Mista (50/50) | HTTP (1,20×) | cada escrita invalida o que o cache da aplicação acabou de guardar; o cache em memória fica **abaixo** da linha de base (0,80×) |
+| Escrita (10/90) | HTTP (1,33×) | memória e Redis empatam com a linha de base: não há o que reaproveitar |
+
+### 1. Sob folga de capacidade, o cache quase não muda a latência
+
+No experimento de latência (450 req/s, ~60% da capacidade da linha de base), o p95 de todas as estratégias ficou entre 2,3 e 3,9 ms. A diferença aparece na mediana das leituras: 0,73 ms sem cache contra 0,17 ms no HTTP, 0,28 ms em memória e 0,38 ms no Redis.
+
+Conclusão para o texto: **com o sistema folgado, o ganho do cache não é a latência; é o trabalho que ele evita.** Ver o item 2.
+
+### 2. O ganho real aparece em recursos e no banco
+
+Na carga de leitura, comparado com a linha de base:
+
+| Estratégia | Acerto | SQL por requisição | Redução | CPU da API |
+|---|---|---|---|---|
+| Sem cache | — | 2,49 | — | 31% |
+| Memória (LRU) | 66,4% | 1,28 | 49% | 26% |
+| Redis | 66,4% | 1,28 | 49% | 27% |
+| HTTP (nginx) | 89,8% | 0,69 | 72% | 16% |
+
+O HTTP rende mais porque o nginx responde sem chegar à API: metade da CPU e um terço dos comandos SQL. Memória e Redis têm a mesma taxa de acerto (66,4%), como esperado, já que a política de cache é a mesma; muda só onde o dado fica.
+
+### 3. Quanto mais escrita, menos o cache serve
+
+A taxa de acerto cai de 66% (leitura) para 39% (mista) e 13% (escrita) em memória e Redis, porque cada escrita invalida a entrada do produto e a versão das listagens. A redução de comandos SQL acompanha: 49%, 11% e 1%.
+
+### 4. O cache em memória pode piorar o desempenho
+
+Na carga mista, a capacidade caiu de 1.000 req/s (sem cache) para 800 req/s (0,80×), e o p99 foi o pior de todos (47 ms, contra 4–5 ms das demais). O cache disputa CPU e memória com a própria API (183 MiB contra 130 MiB da linha de base) no mesmo núcleo, e sob invalidação frequente esse custo não se paga.
+
+É o achado mais contraintuitivo do trabalho e vale destaque: **guardar em memória, no mesmo processo, tem um custo que aparece justamente quando o cache rende pouco.**
+
+### 5. Redis ganha do cache em memória onde mais importa
+
+Na leitura, o Redis sustentou ≥ 2.000 req/s contra 1.200 req/s do cache em memória, com a mesma taxa de acerto. Explicação: o Redis roda em outro contêiner, com CPU própria, enquanto o cache em memória divide o único núcleo da API. Nessa montagem, a "latência de rede a mais" do Redis (rede local virtualizada) custa menos do que o trabalho que ele tira da API.
+
+Cuidado ao escrever: esse resultado **depende do ambiente**. Com rede real entre API e Redis, a diferença diminui. Está nas ameaças à validade.
+
+### 6. O cache HTTP é o mais rápido e o único que serve dado velho
+
+Das 100 escritas do experimento de consistência, **100% das leituras seguintes vieram desatualizadas** no HTTP, com janela média de 60,3 s (o TTL). Nas outras três estratégias, 0%: a escrita invalida a entrada na hora.
+
+Esse é o trade-off central da monografia: o HTTP ganha em capacidade, em CPU e em acessos ao banco justamente porque o intermediário **não sabe** que houve escrita. Serve para catálogo, listagem e conteúdo que tolera atraso; não serve para estoque em tempo real.
+
+### 7. Qualidade experimental (vale citar na metodologia)
+
+- As 12 combinações deram **a mesma capacidade nas 3 repetições**, sem exceção.
+- Zero erros em todas as medições dos quatro experimentos.
+- As 30 sentinelas de saúde ficaram entre 3,0 e 4,0 ms de p95, com swap zero: o ambiente não degradou ao longo das 5,4 h.
+- Todas as diferenças de p95 no teste de latência deram p ajustado de 0,048 (Holm), com delta de Cliff de ±1,00 na maioria dos pares — separação completa entre os grupos, o máximo detectável com 5 repetições. Como as diferenças absolutas são de décimos de milissegundo, **significância estatística aqui não é relevância prática**; diga isso no texto.
 
 ## 6. Perguntas prováveis da banca
 

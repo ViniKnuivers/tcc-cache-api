@@ -1,0 +1,13 @@
+carga,estrategia,capacidade_media,capacidade_dp,valores,ganho_vs_none
+leitura,none,1200.0,0.0,1200;1200;1200,1.0
+leitura,memory,1200.0,0.0,1200;1200;1200,1.0
+leitura,redis,2000.0,0.0,2000;2000;2000,1.6666666666666667
+leitura,http,2000.0,0.0,2000;2000;2000,1.6666666666666667
+mista,none,1000.0,0.0,1000;1000;1000,1.0
+mista,memory,800.0,0.0,800;800;800,0.8
+mista,redis,1000.0,0.0,1000;1000;1000,1.0
+mista,http,1200.0,0.0,1200;1200;1200,1.2
+escrita,none,600.0,0.0,600;600;600,1.0
+escrita,memory,600.0,0.0,600;600;600,1.0
+escrita,redis,600.0,0.0,600;600;600,1.0
+escrita,http,800.0,0.0,800;800;800,1.3333333333333333

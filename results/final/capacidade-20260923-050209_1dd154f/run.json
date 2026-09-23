@@ -1,0 +1,72 @@
+{
+  "runId": "capacidade-20260923-050209_1dd154f",
+  "criadoEm": "2026-09-23T05:02:09.051Z",
+  "git": {
+    "commit": "1dd154fd54918b77d2fe99db5320f2299b4b99b4",
+    "dirty": false,
+    "label": "1dd154f"
+  },
+  "config": {
+    "tipo": "capacidade",
+    "estrategias": [
+      "none",
+      "memory",
+      "redis",
+      "http"
+    ],
+    "cargas": [
+      "leitura",
+      "mista",
+      "escrita"
+    ],
+    "taxas": [
+      400,
+      600,
+      800,
+      1000,
+      1200,
+      1600,
+      2000
+    ],
+    "repeticoes": 3,
+    "aquecimentoS": 15,
+    "duracaoS": 30,
+    "ttlS": 60,
+    "seed": 42
+  },
+  "imagemApi": "sha256:732ebad3db83c106fd487e27ef59a354e74156d8c73ea2a31a933096181c02e8",
+  "maquina": {
+    "hostname": "MacBook-Air-de-Vinicius.local",
+    "plataforma": "darwin 25.6.0 (arm64)",
+    "cpu": "Apple M1",
+    "nucleos": 8,
+    "memoriaGiB": 8,
+    "docker": {
+      "versao": "29.6.1",
+      "cpusVm": 8,
+      "memoriaVmGiB": 3.8,
+      "sistema": "Docker Desktop"
+    },
+    "node": "v24.18.0"
+  },
+  "versoes": {
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "dotenv": "17.4.2",
+    "fastify": "5.12.4",
+    "ioredis": "5.8.2",
+    "lru-cache": "11.5.2",
+    "pg": "8.23.0",
+    "postgres": "postgres:17.6-alpine",
+    "redis": "redis:7.4.11-alpine",
+    "tcc-cache-api": "tcc-cache-api:local",
+    "nginx": "nginx:1.28.3-alpine",
+    "grafana/k6": "grafana/k6:2.2.0"
+  },
+  "criterios": {
+    "p95MaxMs": 100,
+    "descartadasMax": 0.01,
+    "errosMax": 0.01
+  },
+  "retomadas": []
+}

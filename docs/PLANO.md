@@ -4,7 +4,7 @@ Objetivo: entregar a parte prática **completa e fechada**, com experimentos exe
 
 ## 1. Implementação
 
-| # | Item | Status (✅ pronto · ⏳ em andamento) |
+| # | Item | Status |
 |---|---|---|
 | 1 | Esqueleto, Docker Compose, Prisma, seed determinístico | ✅ |
 | 2 | API REST (Fastify): listagem, consulta, criação, atualização (PUT/PATCH), remoção | ✅ |
@@ -12,14 +12,16 @@ Objetivo: entregar a parte prática **completa e fechada**, com experimentos exe
 | 4 | Invalidação: TTL + invalidação por escrita (produto + versão das listagens) | ✅ |
 | 5 | Carga k6: leitura (90/10), mista (50/50), escrita (10/90), popularidade Zipf | ✅ |
 | 6 | Runner: calibração, latência e capacidade; coleta de todas as métricas | ✅ |
-| 7 | Experimento de **consistência**: leituras desatualizadas após escrita | ⏳ |
-| 8 | Amostragem de CPU do próprio k6 (prova de que o gerador não é o gargalo) | ⏳ |
-| 9 | Análise: tabelas, gráficos e testes estatísticos | ⏳ |
-| 10 | Documentação: README, metodologia e resultados | ⏳ |
+| 7 | Experimento de **consistência**: leituras desatualizadas após escrita | ✅ |
+| 8 | Amostragem de CPU do próprio k6 (prova de que o gerador não é o gargalo) | ✅ |
+| 9 | Análise: tabelas, gráficos e testes estatísticos | ✅ |
+| 10 | Documentação: README, metodologia e resultados | ✅ |
+| 11 | Robustez do protocolo: confirmação de degraus reprovados, janela de amostragem alinhada ao cenário, tabelas Zipf compartilhadas entre VUs, verificação de energia/tampa e repetição de medições com suspensão do sistema | ✅ |
 | 12 | Sentinela de saúde do ambiente (a cada 10 medições) e execução sem supervisão retomável | ✅ |
-| 11 | Robustez do protocolo: confirmação de degraus reprovados, janela de amostragem alinhada ao cenário, tabelas Zipf compartilhadas entre VUs, verificação de energia/tampa e repetição de medições com suspensão do sistema | ⏳ |
 
 ## 2. Experimentos
+
+Todos executados em 23/09/2026 (5,4 h), a partir do commit `1dd154f`. Resultados em [`RESULTADOS.md`](RESULTADOS.md).
 
 | # | Experimento | Pergunta que responde | Desenho | Duração |
 |---|---|---|---|---|

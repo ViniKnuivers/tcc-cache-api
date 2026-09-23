@@ -1,0 +1,50 @@
+{
+  "runId": "consistencia-20260923-082123_1dd154f",
+  "criadoEm": "2026-09-23T08:21:23.294Z",
+  "git": {
+    "commit": "1dd154fd54918b77d2fe99db5320f2299b4b99b4",
+    "dirty": false,
+    "label": "1dd154f"
+  },
+  "config": {
+    "tipo": "consistencia",
+    "estrategias": [
+      "none",
+      "memory",
+      "redis",
+      "http"
+    ],
+    "n": 100,
+    "ttlS": 60,
+    "seed": 42
+  },
+  "imagemApi": "sha256:7ec556db3fa1639958c2a7d35134ecbe82aeef7f376c597519f73fd7a5ad34a9",
+  "maquina": {
+    "hostname": "MacBook-Air-de-Vinicius.local",
+    "plataforma": "darwin 25.6.0 (arm64)",
+    "cpu": "Apple M1",
+    "nucleos": 8,
+    "memoriaGiB": 8,
+    "docker": {
+      "versao": "29.6.1",
+      "cpusVm": 8,
+      "memoriaVmGiB": 3.8,
+      "sistema": "Docker Desktop"
+    },
+    "node": "v24.18.0"
+  },
+  "versoes": {
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "dotenv": "17.4.2",
+    "fastify": "5.12.4",
+    "ioredis": "5.8.2",
+    "lru-cache": "11.5.2",
+    "pg": "8.23.0",
+    "postgres": "postgres:17.6-alpine",
+    "redis": "redis:7.4.11-alpine",
+    "tcc-cache-api": "tcc-cache-api:local",
+    "nginx": "nginx:1.28.3-alpine",
+    "grafana/k6": "grafana/k6:2.2.0"
+  }
+}
